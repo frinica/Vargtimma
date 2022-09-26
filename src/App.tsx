@@ -1,39 +1,41 @@
 import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import "./App.css";
-import OnlineContacts from "./pages/contacts/Online";
 import HomePage from "./pages/HomePage";
+import LandingPage from "./pages/LandingPage";
+import Navigation from "./pages/Navigation";
+import RegisterPage from "./pages/users/RegisterPage";
 
 const App = () => {
+  const path = window.location.pathname;
+
   return (
     <div className="App">
       <Router>
-        <nav className="navbar">
-          <div>
-            <ul>
-              <li>
-                <Link to="/">Hem</Link>
-              </li>
-              <li>
-                <Link to="/kontakter">Kontakter</Link>
-              </li>
-              <li>
-                <Link to="/community">Community</Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <ul>
-              <li>112</li>
-              <li>Larm</li>
-            </ul>
-          </div>
-        </nav>
+        <header>
+          {path === "/" || path === "/registrera" || path === "/login" ? (
+            <h1>VARGTIMMA</h1>
+          ) : (
+            <h1>
+              <Link to="/start">VARGTIMMA</Link>
+            </h1>
+          )}
+        </header>
 
-        <main className="appContent">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-          </Routes>
-        </main>
+        <div className="appContent">
+          {path != "/" && path != "/registrera" && path != "/login" ? (
+            <div>
+              <Navigation />
+            </div>
+          ) : null}
+
+          <main className="appView">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/registrera" element={<RegisterPage />} />
+              <Route path="/start" element={<HomePage />} />
+            </Routes>
+          </main>
+        </div>
       </Router>
     </div>
   );
