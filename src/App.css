@@ -1,1 +1,7 @@
+.App {
+  display: flex;
+}
 
+.homepageWrapper {
+  display: flex;
+}
