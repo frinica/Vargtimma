@@ -17,7 +17,7 @@ export default class CCManager {
   }
 
   // Create the message object
-  static getTextMessage(uid: string, text: string, msgType: any) {
+  static getTextMessage(uid: any, text: string, msgType: any) {
     if (msgType === "user") {
       return new CometChat.TextMessage(
         uid,
