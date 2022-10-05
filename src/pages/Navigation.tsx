@@ -19,7 +19,9 @@ const Navigation: FC = () => {
       </div>
       <div>
         <ul>
-          <li>112</li>
+          <li>
+            <a href="tel:">112</a>
+          </li>
           <li>Larm</li>
         </ul>
       </div>

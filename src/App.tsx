@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import "./App.css";
+import GroupChatPage from "./pages/community/GroupChatPage";
 import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
 import Navigation from "./pages/Navigation";
-import RegisterPage from "./pages/users/RegisterPage";
+import LoginPage from "./pages/users/LoginPage";
+import RegisterPage from "./pages/users/Register";
 
 const App = () => {
   const path = window.location.pathname;
@@ -32,7 +34,12 @@ const App = () => {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/registrera" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
               <Route path="/start" element={<HomePage />} />
+              <Route
+                path="/community"
+                element={<GroupChatPage GUID={undefined} />}
+              />
             </Routes>
           </main>
         </div>

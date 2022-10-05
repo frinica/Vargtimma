@@ -16,8 +16,8 @@ interface IChatState {
   isAuthenticated: boolean;
 }
 
-// Using class component to implement stateful component
-class GroupChat extends React.Component<IChatProps, IChatState> {
+// Using class component to implement statefullness
+class GroupChatPage extends React.Component<IChatProps, IChatState> {
   chatProps: IChatProps = {
     GUID: config.GUID,
   };
@@ -149,4 +149,4 @@ class GroupChat extends React.Component<IChatProps, IChatState> {
     );
   }
 }
-export default GroupChat;
+export default GroupChatPage;

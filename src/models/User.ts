@@ -2,10 +2,10 @@ export interface IUser {
   firstName: string;
   lastName: string;
   alias: string;
-  phone: number | null;
+  phone?: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  /* confirmPassword: string;
   errors: {
     firstName: string;
     lastName: string;
@@ -14,5 +14,15 @@ export interface IUser {
     email: string;
     password: string;
     confirmPassword: string;
-  };
+  }; */
+}
+
+export interface IRegister {
+  firstName: string;
+  lastName: string;
+  alias: string;
+  phone: string;
+  email: string;
+  password: string;
+  confirmPass: string;
 }
