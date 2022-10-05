@@ -13,18 +13,14 @@ const RegisterPage: FC = () => {
     confirmPass: "",
   };
 
-  // Phone number validation
-  const phoneRegex =
-    /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
   // Validation schema
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required("Obligatoriskt fält"),
     lastName: Yup.string().required("Obligatoriskt fält"),
     alias: Yup.string().required("Obligatoriskt fält"),
     phone: Yup.string()
-      .matches(phoneRegex, "Ogiltigt telefonnummer")
-      .required("Obligatoriskt fält"),
+      .required("Obligatoriskt fält")
+      .min(10, "Inte ett giltigt telefonnummer"),
     email: Yup.string().email().required("Obligatoriskt fält"),
     password: Yup.string()
       .required("Obligatoriskt fält")
@@ -34,16 +30,19 @@ const RegisterPage: FC = () => {
       .oneOf([Yup.ref("password")], "Lösenoret matchar inte"),
   });
 
-  const handleSubmit = (e: any) => {
+  /* const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(e);
-  };
+  }; */
 
   return (
     <Formik
       initialValues={initValues}
+      onSubmit={(values, { setSubmitting }) => {
+        console.log(values);
+        setSubmitting(false);
+      }}
       validationSchema={RegisterSchema}
-      onSubmit={handleSubmit}
     >
       {(formik) => {
         const { errors, touched, isValid, dirty } = formik;
@@ -96,7 +95,7 @@ const RegisterPage: FC = () => {
 
               <div>
                 <label htmlFor="phone">Telefonnummer</label>
-                <input
+                <Field
                   type="text"
                   name="phone"
                   className={errors.phone && touched.phone ? "input-error" : ""}
