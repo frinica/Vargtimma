@@ -30,11 +30,6 @@ const RegisterPage: FC = () => {
       .oneOf([Yup.ref("password")], "Lösenoret matchar inte"),
   });
 
-  /* const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log(e);
-  }; */
-
   return (
     <Formik
       initialValues={initValues}

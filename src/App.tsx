@@ -4,7 +4,7 @@ import GroupChatPage from "./pages/community/GroupChatPage";
 import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
 import Navigation from "./pages/Navigation";
-import LoginPage from "./pages/users/LoginPage";
+import LoginPage from "./pages/users/Login";
 import RegisterPage from "./pages/users/Register";
 
 const App = () => {
