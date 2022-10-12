@@ -20,11 +20,14 @@ export const UserDB = {
   },
 
   // Get one user
-  async getUserByAlias(alias: string) {
+  async getExistingUser(alias?: string, email?: string) {
+    const aToLowerCase = alias?.toLowerCase();
+    const eToLowerCase = email?.toLowerCase();
     const collection = await getCollection();
 
-    const user = collection.findOne({ alias });
-
+    const user = await collection.findOne({
+      $or: [{ alias: aToLowerCase }, { email: eToLowerCase }],
+    });
     return user;
   },
 };
