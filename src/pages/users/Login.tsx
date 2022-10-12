@@ -1,8 +1,11 @@
 import { FC, useState } from "react";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { login } from "../../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: FC = () => {
+  const navigate = useNavigate();
   const initValues = { email: "", password: "" };
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email().required(),
@@ -13,8 +16,18 @@ const LoginPage: FC = () => {
     <>
       <Formik
         initialValues={initValues}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
+        onSubmit={async (values, { setSubmitting }) => {
+          const success = await login(values);
+          try {
+            if (success) {
+              navigate("/start");
+              window.location.reload();
+            } else {
+              alert("Error when trying to login");
+            }
+          } catch (err) {
+            alert(err);
+          }
           setSubmitting(false);
         }}
         validationSchema={LoginSchema}
