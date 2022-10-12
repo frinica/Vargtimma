@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import React from "react";
 import { Navigate } from "react-router-dom";
 import config from "../../config";
-import chat from "../../lib/chat";
+import chat from "../../services/chat.service";
 
 interface IChatProps {
   GUID: any;

@@ -5,16 +5,6 @@ export interface IUser {
   phone?: string;
   email: string;
   password: string;
-  /* confirmPassword: string;
-  errors: {
-    firstName: string;
-    lastName: string;
-    alias: string;
-    phone: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }; */
 }
 
 export interface IRegister {
@@ -25,4 +15,9 @@ export interface IRegister {
   email: string;
   password: string;
   confirmPass: string;
+}
+
+export interface ILogin {
+  email: string;
+  password: string;
 }

@@ -1,8 +1,11 @@
 import { FC } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { register } from "../../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage: FC = () => {
+  const navigate = useNavigate();
   const initValues = {
     firstName: "",
     lastName: "",
@@ -33,8 +36,17 @@ const RegisterPage: FC = () => {
   return (
     <Formik
       initialValues={initValues}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          const success = await register(values);
+          if (success) {
+            navigate("/login");
+          } else {
+            alert("There was an error when trying to register new user");
+          }
+        } catch (err) {
+          alert(err);
+        }
         setSubmitting(false);
       }}
       validationSchema={RegisterSchema}
