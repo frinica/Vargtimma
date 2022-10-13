@@ -8,11 +8,12 @@ interface ServerToClientEvents {
   basicEmit: (a: number, b: string, c: Buffer) => void;
   withAck: (d: string, callback: (e: number) => void) => void;
   join: (username: any, room: any) => void;
+  sendMessage: (message: any) => void;
 }
 
 interface ClientToServerEvents {
   // Receiving events
-  hello: () => void;
+  message: (message: any) => void;
 }
 
 interface InterServerEvents {
@@ -28,7 +29,7 @@ interface SocketData {
 
 const app = express();
 const server = http.createServer(app);
-const { addUser } = require("./socket/user");
+const { addUser, removeUser } = require("./socket/user");
 
 const io = new Server<
   ServerToClientEvents,
@@ -52,12 +53,23 @@ server.listen(PORT, () =>
 
 io.on("connection", (socket) => {
   socket.on("join", ({ username, room }) => {
-    const { user, error } = addUser({ id: socket.id, username, room });
-
+    const { user } = addUser({ id: socket.id, username, room });
     socket.join(user.room);
+    socket.emit("message", {
+      user: "Admin",
+      text: "Välkommen till chatten.",
+    });
+
+    socket.on("sendMessage", ({ message }) => {
+      io.to(user.room).emit("message", {
+        user: user.username,
+        text: message,
+      });
+    });
   });
 
   socket.on("disconnect", () => {
-    console.log("A disconnection has been made");
+    const user = removeUser(socket.id);
+    console.log(user);
   });
 });

@@ -19,3 +19,8 @@ exports.addUser = ({ id, username, room }: IChatUser) => {
 
   return { user };
 };
+
+exports.removeUser = (id: number) => {
+  const index = users.findIndex((user) => user.id === id);
+  return users[index];
+};
