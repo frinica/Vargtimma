@@ -46,4 +46,9 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Get user data (username)
+router.get("/user", async (req, res) => {
+  res.status(200).send(res.locals.user.username);
+});
+
 module.exports = router;
