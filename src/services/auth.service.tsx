@@ -21,3 +21,13 @@ export const login = async (loginData: ILogin) => {
 
   return success;
 };
+
+// Get user data
+export const userData = async () => {
+  const res = await axios.get(API_URL + "user");
+  const success = res.status === 200;
+
+  if (success) {
+    return res.data;
+  }
+};
