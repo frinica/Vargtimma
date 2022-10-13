@@ -1,14 +1,13 @@
-import { FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import io from "socket.io-client";
-import queryString from "query-string";
 import { userData } from "../../services/auth.service";
-let socket;
 
 const CommunityChat: FC = (location: any) => {
   const socket = io("http://localhost:5000");
   const [username, setUsername] = useState<string>("");
   const [room, setRoom] = useState<string | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
+  const [message, setMessage] = useState<string>("");
 
   const getUser = async () => {
     const currentUsername = await userData();
@@ -20,6 +19,14 @@ const CommunityChat: FC = (location: any) => {
     const urlParams = new URLSearchParams(queryString);
     const activeRoom = urlParams.get("room");
     setRoom(activeRoom);
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (message) {
+      socket.emit("sendMessage", { message });
+      setMessage("");
+    } else alert("Empty input");
   };
 
   useEffect(() => {
@@ -51,6 +58,15 @@ const CommunityChat: FC = (location: any) => {
           </div>
         );
       })}
+
+      <form action="" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={message}
+          onChange={(e: any) => setMessages(e.target.value)}
+        />
+        <input type="submit" />
+      </form>
     </div>
   );
 };
