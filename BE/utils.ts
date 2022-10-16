@@ -2,6 +2,11 @@ import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 import jwt from "jsonwebtoken";
 
+export interface JWTUserData {
+  userID: ObjectId;
+  email: string;
+}
+
 const jwtSecret = process.env.JWT_SECRET || "";
 export interface IJWT {
   userID: ObjectId;
@@ -28,4 +33,13 @@ export function getJWT(email: string, userID: ObjectId) {
   const token = jwt.sign(userData, jwtSecret);
 
   return token;
+}
+
+export function verifyDecodeJWT(token: string) {
+  try {
+    const userData = jwt.verify(token, jwtSecret) as JWTUserData;
+    return userData;
+  } catch {
+    return false;
+  }
 }

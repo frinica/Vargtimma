@@ -3,12 +3,13 @@ config();
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import { authUser } from "./middlewares";
 
 const userRouter = require("./routes/UserRoute");
 
 const app = express();
 app.use(cors());
-app.use(morgan("tiny"));
+app.use(morgan("tiny")); // Debug
 app.use(express.json());
 
 app.use("/user", userRouter);

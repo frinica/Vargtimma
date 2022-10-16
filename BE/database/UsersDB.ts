@@ -28,6 +28,7 @@ export const UserDB = {
     const user = await collection.findOne({
       $or: [{ alias: aToLowerCase }, { email: eToLowerCase }],
     });
+
     return user;
   },
 };

@@ -1,5 +1,6 @@
 import express from "express";
 import { UserDB } from "../database/UsersDB";
+import { authUser } from "../middlewares";
 import IUser from "../models/UserModel";
 import { comparePassword, getJWT, hashPassword } from "../utils";
 
@@ -46,9 +47,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Get user data (username)
-router.get("/user", async (req, res) => {
-  res.status(200).send(res.locals.user.username);
+router.get("/", authUser, (req, res) => {
+  res.status(200).send(res.locals.user.email);
 });
 
 module.exports = router;
