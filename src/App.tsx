@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import "./App.css";
+import CommunityChat from "./pages/community/CommunityChat";
 import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
 import Navigation from "./pages/Navigation";
@@ -23,7 +24,7 @@ const App = () => {
         </header>
 
         <div className="appContent">
-          {path != "/" && path != "/registrera" && path != "/login" ? (
+          {path !== "/" && path !== "/registrera" && path !== "/login" ? (
             <div>
               <Navigation />
             </div>
@@ -35,6 +36,7 @@ const App = () => {
               <Route path="/registrera" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/start" element={<HomePage />} />
+              <Route path="/community" element={<CommunityChat />} />
             </Routes>
           </main>
         </div>

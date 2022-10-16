@@ -13,7 +13,7 @@ const Navigation: FC = () => {
             <Link to="/kontakter">Kontakter</Link>
           </li>
           <li>
-            <Link to="/community">Community</Link>
+            <Link to="/community?room=chat">Community</Link>
           </li>
         </ul>
       </div>

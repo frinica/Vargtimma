@@ -22,12 +22,35 @@ export const login = async (loginData: ILogin) => {
   return success;
 };
 
+const getAuthJWT = () => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    return token;
+  } else {
+    return false;
+  }
+};
+
+const getAuthHeader = () => {
+  const token = getAuthJWT();
+
+  if (token) {
+    return { Authorization: `Bearer ${token}` };
+  } else {
+    return { Authorization: "" };
+  }
+};
+
+export const checkIsLoggedIn = () => {
+  const token = getAuthJWT();
+  return Boolean(token);
+};
+
 // Get user data
 export const userData = async () => {
-  const res = await axios.get(API_URL + "user");
-  const success = res.status === 200;
-
-  if (success) {
-    return res.data;
-  }
+  const res = await axios.get(API_URL, {
+    headers: getAuthHeader(),
+  });
+  return res.data;
 };

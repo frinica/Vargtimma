@@ -12,9 +12,11 @@ const CommunityChat: FC = (location: any) => {
   const getUser = async () => {
     const currentUsername = await userData();
     setUsername(currentUsername);
+    console.log(username);
   };
 
   const getRoom = () => {
+    console.log("Running getRoom");
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const activeRoom = urlParams.get("room");
@@ -31,14 +33,26 @@ const CommunityChat: FC = (location: any) => {
 
   useEffect(() => {
     getUser();
-    getRoom();
-    if (username.length > 0 && room !== null) {
-      socket.emit("join", { username, room }, (error: any) => {
-        if (error) alert(error);
-      });
-    } else {
-      console.log("Failure to connect to socket");
-    }
+
+    /* Promise.resolve(getUser())
+      .catch((error) => {
+        console.log(error.message);
+      })
+      .then(() => {
+        getRoom();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+      .then(() => {
+        if (username.length > 0 && room !== null) {
+          socket.emit("join", { username, room }, (error: any) => {
+            if (error) alert(error);
+          });
+        } else {
+          console.log("Failure to connect to socket");
+        }
+      }); */
   }, [location.search]);
 
   useEffect(() => {
