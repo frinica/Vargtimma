@@ -1,7 +1,20 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { userData } from "../services/auth.service";
 
 const Navigation: FC = () => {
+  const [username, setUsername] = useState("");
+
+  const getUser = async () => {
+    const currentUsername = await userData();
+    setUsername(currentUsername);
+  };
+
+  useEffect(() => {
+    getUser();
+    console.log("Hej från nav");
+  }, []);
+
   return (
     <nav className="navbar">
       <div>
@@ -13,7 +26,9 @@ const Navigation: FC = () => {
             <Link to="/kontakter">Kontakter</Link>
           </li>
           <li>
-            <Link to="/community?room=chat">Community</Link>
+            <Link to={`/community?username=${username}&room=chat`}>
+              Community
+            </Link>
           </li>
         </ul>
       </div>

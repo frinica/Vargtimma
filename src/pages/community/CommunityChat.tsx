@@ -1,74 +1,51 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import io from "socket.io-client";
 import { userData } from "../../services/auth.service";
+const ENDPOINT = "http://localhost:5000";
+let socket: any;
+const initMessages = [{ user: "", text: "" }];
 
-const CommunityChat: FC = (location: any) => {
-  const socket = io("http://localhost:5000");
-  const [username, setUsername] = useState<string>("");
-  const [room, setRoom] = useState<string | null>(null);
-  const [messages, setMessages] = useState<any[]>([]);
-  const [message, setMessage] = useState<string>("");
+const CommunityChat: FC = () => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const username = urlParams.get("username");
+  const room = urlParams.get("room");
+  const [messages, setMessages] = useState(initMessages);
+  const [message, setMessage] = useState("");
 
-  const getUser = async () => {
-    const currentUsername = await userData();
-    setUsername(currentUsername);
-    console.log(username);
-  };
-
-  const getRoom = () => {
-    console.log("Running getRoom");
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const activeRoom = urlParams.get("room");
-    setRoom(activeRoom);
-  };
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    if (message) {
-      socket.emit("sendMessage", { message });
-      setMessage("");
-    } else alert("Empty input");
-  };
-
+  // Connect user to the socket
   useEffect(() => {
-    getUser();
+    socket = io(ENDPOINT);
 
-    /* Promise.resolve(getUser())
-      .catch((error) => {
-        console.log(error.message);
-      })
-      .then(() => {
-        getRoom();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      })
-      .then(() => {
-        if (username.length > 0 && room !== null) {
-          socket.emit("join", { username, room }, (error: any) => {
-            if (error) alert(error);
-          });
-        } else {
-          console.log("Failure to connect to socket");
-        }
-      }); */
-  }, [location.search]);
+    socket.emit("join", { username, room }, (error: any) => {
+      console.log("Connected to socket");
+      if (error) alert(error);
+    });
+  }, []);
 
+  // Re-render on new messages
   useEffect(() => {
-    socket.on("message", (message) => {
+    socket.on("message", (message: any) => {
       setMessages((messages) => [...messages, message]);
     });
   }, []);
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (message) {
+      socket.emit("sendMessage", { message });
+      setMessage("");
+    } else alert("empty input");
+  };
+
   return (
     <div>
-      {messages.map((val, i) => {
+      {messages.map((message, i) => {
         return (
           <div key={i}>
-            {val.text}
+            {message.user}
             <br />
-            {val.user}
+            {message.text}
           </div>
         );
       })}
@@ -77,7 +54,9 @@ const CommunityChat: FC = (location: any) => {
         <input
           type="text"
           value={message}
-          onChange={(e: any) => setMessages(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setMessage(e.target.value)
+          }
         />
         <input type="submit" />
       </form>
