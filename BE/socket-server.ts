@@ -31,7 +31,7 @@ const app = express();
 const server = http.createServer(app);
 const { addUser, removeUser } = require("./socket/user");
 
-const io = new Server<
+/* const io = new Server<
   ServerToClientEvents,
   ClientToServerEvents,
   InterServerEvents,
@@ -40,33 +40,52 @@ const io = new Server<
   cors: {
     origin: "http://localhost:3000",
   },
+}); */
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+  },
 });
 
 const PORT = process.env.SOCKET_PORT || 5000;
 
+io.on("connection", (socket: any) => {
+  socket.once(
+    "join",
+    ({ username, room }: { username: string; room: string }, callBack: any) => {
+      const { user, error } = addUser({ id: socket.id, username, room });
+      if (error) return callBack(error);
+      socket.join(user.room, (error: any) => {
+        if (error) {
+          console.log(error);
+          return;
+        }
+      });
+      /* socket.emit("message", {
+        user: "Admin",
+        text: "Välkommen till chatten.",
+      }); */
+      /* io.to(user.room).emit("message", {
+        user: "Admin",
+        text: `${user.username} has joined!`,
+      }); */
+      callBack(null);
+
+      socket.on("sendMessage", ({ message }: { message: any }) => {
+        console.log(message);
+        io.to(user.room).emit("message", {
+          user: user.username,
+          text: message,
+        });
+      });
+    }
+  );
+
+  socket.on("disconnect", () => {
+    removeUser(socket.id);
+  });
+});
+
 server.listen(PORT, () =>
   console.log(`Socket-server is running on http://localhost:${PORT}`)
 );
-
-io.on("connection", (socket) => {
-  socket.on("join", ({ username, room }) => {
-    const { user } = addUser({ id: socket.id, username, room });
-    socket.join(user.room);
-    socket.emit("message", {
-      user: "Admin",
-      text: "Välkommen till chatten.",
-    });
-
-    socket.on("sendMessage", ({ message }) => {
-      io.to(user.room).emit("message", {
-        user: user.username,
-        text: message,
-      });
-    });
-  });
-
-  socket.on("disconnect", () => {
-    const user = removeUser(socket.id);
-    console.log(user);
-  });
-});
