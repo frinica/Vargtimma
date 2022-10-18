@@ -12,7 +12,6 @@ const Navigation: FC = () => {
 
   useEffect(() => {
     getUser();
-    console.log("Hej från nav");
   }, []);
 
   return (
