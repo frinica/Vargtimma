@@ -51,4 +51,16 @@ router.get("/", authUser, (req, res) => {
   res.status(200).send(res.locals.user.email);
 });
 
+// Search for users
+router.get("/search", authUser, async (req, res) => {
+  const { alias, phone } = req.body;
+  const users = await UserDB.searchUsers(alias, phone);
+
+  if (!users) {
+    res.sendStatus(404);
+  } else {
+    res.status(200).send(users.toArray());
+  }
+});
+
 module.exports = router;

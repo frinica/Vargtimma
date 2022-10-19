@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ILogin, IRegister } from "../models/User";
+import { ILogin, IRegister, ISearch } from "../models/User";
 
 const API_URL = `${process.env.REACT_APP_API_URL}user/`;
 
@@ -37,7 +37,7 @@ const getAuthJWT = () => {
   }
 };
 
-const getAuthHeader = () => {
+export const getAuthHeader = () => {
   const token = getAuthJWT();
 
   if (token) {
@@ -57,5 +57,12 @@ export const userData = async () => {
   const res = await axios.get(API_URL, {
     headers: getAuthHeader(),
   });
+  return res.data;
+};
+
+// Get search results
+export const searchUser = async (searchData: ISearch) => {
+  const res = await axios.get(API_URL + "search", { headers: getAuthHeader() });
+
   return res.data;
 };
