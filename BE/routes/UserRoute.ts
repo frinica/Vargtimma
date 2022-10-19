@@ -6,6 +6,11 @@ import { comparePassword, getJWT, hashPassword } from "../utils";
 
 const router = express.Router();
 
+interface searchResult {
+  alias: string;
+  phone: string;
+}
+
 // Register a new user
 router.post("/register", async (req, res) => {
   const { firstName, lastName, alias, phone, email, password } = req.body;
@@ -59,7 +64,16 @@ router.get("/search", authUser, async (req, res) => {
   if (!users) {
     res.sendStatus(404);
   } else {
-    res.status(200).send(users.toArray());
+    let userArray: searchResult[] = [];
+    users.forEach((u) => {
+      const user = {
+        alias: u.alias!,
+        phone: u.phone!,
+      };
+      userArray.push(user);
+    });
+    console.log(userArray);
+    res.status(200).send(userArray);
   }
 });
 

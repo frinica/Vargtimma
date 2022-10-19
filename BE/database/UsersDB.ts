@@ -3,6 +3,11 @@ import { getDB } from "./MongoDB";
 
 const COLLECTION_NAME = "users";
 
+interface searchParams {
+  alias: string;
+  phone: string;
+}
+
 export const getCollection = async () => {
   const db = await getDB();
   const collection = db.collection<IUser>(COLLECTION_NAME);
@@ -37,9 +42,11 @@ export const UserDB = {
     const aToLowerCase = alias?.toLowerCase();
     const collection = await getCollection();
 
-    const users = collection.find({
-      $or: [{ alias: aToLowerCase }, { phone }],
-    });
+    const users = collection
+      .find({
+        $or: [{ alias: aToLowerCase }, { phone: phone }],
+      })
+      .toArray();
 
     return users;
   },
