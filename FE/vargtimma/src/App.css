@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(43, 42, 42);
+}
+
+.App {
+  color: white;
+  text-align: center;
+  height: 100vh;
+}
+
+/* Buttons */
+.btn-custom {
+  background-color: #ffb34a;
+  color: white;
+  box-shadow: #5a5959 0px 3px 8px;
+  letter-spacing: 1.3px;
+}
+
+/* Landing page */
+.wrapper {
+  max-width: 350px;
+  min-height: 500px;
+  position: relative;
+  border: 1px solid rgba(156, 154, 154, 0.867);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: #f06d4c 0px 3px 8px;
+}
+
+.app-name {
+  font-weight: 600;
+  font-size: 2.5rem;
+  letter-spacing: 1.3px;
+  padding-left: 10px;
+  color: #f06d4c;
+}
