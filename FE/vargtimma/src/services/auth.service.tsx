@@ -22,6 +22,11 @@ export const login = async (loginData: ILogin) => {
   return success;
 };
 
+// Logout user
+export const logout = async () => {
+  localStorage.removeItem("token");
+};
+
 const getAuthJWT = () => {
   const token = localStorage.getItem("token");
 

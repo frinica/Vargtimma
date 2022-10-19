@@ -1,8 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { userData } from "../services/auth.service";
+import { Button } from "react-bootstrap";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { logout, userData } from "../services/auth.service";
 
 const Navigation: FC = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
 
   const getUser = async () => {
@@ -14,6 +16,11 @@ const Navigation: FC = () => {
     getUser();
   }, []);
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+    window.location.reload();
+  };
   return (
     <header>
       {/* Sidebar navigation */}
@@ -57,7 +64,9 @@ const Navigation: FC = () => {
           {/* Right side links */}
           <ul className="list-group-flush mx-2 mt-3">
             <li className="list-group-item">
-              <Link to="">Logga ut</Link>
+              <Button variant="custom" size="sm" onClick={handleLogout}>
+                Logga ut
+              </Button>
             </li>
           </ul>
         </div>

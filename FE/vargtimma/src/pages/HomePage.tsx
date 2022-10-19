@@ -1,5 +1,4 @@
 import { FC } from "react";
-import OnlineContacts from "./contacts/Online";
 
 const HomePage: FC = () => {
   return (
@@ -29,9 +28,6 @@ const HomePage: FC = () => {
             necessitatibus mollitia id, totam culpa similique enim adipisci
             possimus numquam nihil aliquid?
           </p>
-        </div>
-        <div className="rightSidebar">
-          <OnlineContacts />
         </div>
       </div>
     </div>

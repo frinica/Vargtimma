@@ -7,6 +7,7 @@ import LandingPage from "./pages/LandingPage";
 import Navigation from "./pages/Navigation";
 import LoginPage from "./pages/users/Login";
 import RegisterPage from "./pages/users/Register";
+import ContactsPage from "./pages/contacts/Contacts";
 
 const App = () => {
   const path = window.location.pathname;
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/start" element={<HomePage />} />
             <Route path="/community" element={<CommunityChat />} />
+            <Route path="/kontakter" element={<ContactsPage />} />
           </Routes>
         </main>
       </Router>
