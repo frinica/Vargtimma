@@ -24,12 +24,12 @@ const App = () => {
           )}
         </header> */}
 
-        <div className="appContent">
-          {path !== "/" && path !== "/registrera" && path !== "/login" ? (
-            <div>
-              <Navigation />
-            </div>
-          ) : null}
+        {path !== "/" && path !== "/registrera" && path !== "/login" ? (
+          <div>
+            <Navigation />
+          </div>
+        ) : null}
+        <main className="appContent">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/registrera" element={<RegisterPage />} />
@@ -37,7 +37,7 @@ const App = () => {
             <Route path="/start" element={<HomePage />} />
             <Route path="/community" element={<CommunityChat />} />
           </Routes>
-        </div>
+        </main>
       </Router>
     </div>
   );
