@@ -61,8 +61,10 @@ export const userData = async () => {
 };
 
 // Get search results
-export const searchUser = async (searchData: ISearch) => {
-  const res = await axios.get(API_URL + "search", { headers: getAuthHeader() });
-
+export const searchUser = async (search: { search: string }) => {
+  console.log(search);
+  const res = await axios.post(API_URL + "search", search, {
+    headers: getAuthHeader(),
+  });
   return res.data;
 };

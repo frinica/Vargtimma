@@ -57,8 +57,9 @@ router.get("/", authUser, (req, res) => {
 });
 
 // Search for users
-router.get("/search", authUser, async (req, res) => {
-  const { alias, phone } = req.body;
+router.post("/search", authUser, async (req, res) => {
+  const alias = req.body.search;
+  const phone = req.body.search;
   const users = await UserDB.searchUsers(alias, phone);
 
   if (!users) {

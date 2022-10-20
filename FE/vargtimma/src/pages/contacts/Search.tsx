@@ -5,15 +5,19 @@ import { searchUser } from "../../services/auth.service";
 
 const SearchPage: FC = () => {
   const initValues = { alias: "", phone: "" };
-  const [users, setUsers] = useState([{ alias: "", phone: "" }]);
+  const initSearch = { search: "" };
+
+  const [users, setUsers] = useState([initValues]);
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <>
       <Formik
-        initialValues={initValues}
+        initialValues={initSearch}
         onSubmit={async (value, { setSubmitting }) => {
           const res = await searchUser(value);
           setUsers(res);
+          setIsChecked(true);
           setSubmitting(false);
         }}
       >
@@ -31,7 +35,7 @@ const SearchPage: FC = () => {
       </Formik>
 
       {/* Search results */}
-      {users.length > 0 ? (
+      {isChecked ? (
         users.map((user, i) => {
           return (
             <div key={i} className="usercard col-lg-3">
