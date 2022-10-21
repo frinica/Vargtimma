@@ -3,11 +3,6 @@ import { getDB } from "./MongoDB";
 
 const COLLECTION_NAME = "users";
 
-interface searchParams {
-  alias: string;
-  phone: string;
-}
-
 export const getCollection = async () => {
   const db = await getDB();
   const collection = db.collection<IUser>(COLLECTION_NAME);

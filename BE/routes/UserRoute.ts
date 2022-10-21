@@ -27,6 +27,7 @@ router.post("/register", async (req, res) => {
       phone,
       email,
       hashedPassword,
+      role: 0,
     };
     const userID = await UserDB.insertUser(user);
 
@@ -42,7 +43,7 @@ router.post("/login", async (req, res) => {
   if (user) {
     const validatePass = comparePassword(password, user.hashedPassword);
     if (validatePass) {
-      const token = getJWT(email, user._id);
+      const token = getJWT(user._id, user.alias, user.phone, email, user.role);
       res.status(200).send(token);
     } else {
       res.sendStatus(400);
@@ -53,7 +54,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/", authUser, (req, res) => {
-  res.status(200).send(res.locals.user.email);
+  res.status(200).send(res.locals.user);
 });
 
 // Search for users

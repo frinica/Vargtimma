@@ -1,15 +1,25 @@
+import { ObjectId } from "mongodb";
 import { FC, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { string } from "yup/lib/locale";
+import { IUser } from "../models/User";
 import { logout, userData } from "../services/auth.service";
 
 const Navigation: FC = () => {
+  const initValues = {
+    userID: "",
+    alias: "",
+    phone: "",
+    email: "",
+    role: null,
+  };
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState(initValues);
 
   const getUser = async () => {
-    const currentUsername = await userData();
-    setUsername(currentUsername);
+    const currentUser = await userData();
+    setUser(currentUser);
   };
 
   useEffect(() => {
@@ -21,6 +31,7 @@ const Navigation: FC = () => {
     navigate("/");
     window.location.reload();
   };
+
   return (
     <header>
       {/* Sidebar navigation */}
@@ -35,10 +46,15 @@ const Navigation: FC = () => {
                 <Link to="/kontakter">Kontakter</Link>
               </li>
               <li className="list-group-item list-group-item-action py-2 ripple bg-black">
-                <Link to={`/community?username=${username}&room=chat`}>
+                <Link to={`/community?username=${user.alias}&room=chat`}>
                   Community
                 </Link>
               </li>
+              {user.role === 2 ? (
+                <li className="list-group-item list-group-item-action py-2 ripple bg-black">
+                  <Link to={`/adminboard?id=${user.userID}`}>Admin board</Link>
+                </li>
+              ) : null}
             </ul>
           </div>
           <div>

@@ -9,6 +9,7 @@ import LoginPage from "./pages/users/Login";
 import RegisterPage from "./pages/users/Register";
 import ContactsPage from "./pages/contacts/Contacts";
 import SearchPage from "./pages/contacts/Search";
+import AdminPage from "./pages/admin/AdminBoard";
 
 const App = () => {
   const path = window.location.pathname;
@@ -38,7 +39,7 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/start" element={<HomePage />} />
             <Route path="/community" element={<CommunityChat />} />
-            <Route path="/kontakter" element={<ContactsPage />} />
+            <Route path="/adminboard" element={<AdminPage />} />
             <Route path="/search" element={<SearchPage />} />
           </Routes>
         </main>

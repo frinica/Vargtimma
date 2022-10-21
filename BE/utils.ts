@@ -10,7 +10,10 @@ export interface JWTUserData {
 const jwtSecret = process.env.JWT_SECRET || "";
 export interface IJWT {
   userID: ObjectId;
+  alias: string;
+  phone: string;
   email: string;
+  role: number;
 }
 
 // Hash password to save in DB
@@ -28,8 +31,14 @@ export function comparePassword(password: string, hash: string) {
 }
 
 // JWT
-export function getJWT(email: string, userID: ObjectId) {
-  const userData: IJWT = { email, userID };
+export function getJWT(
+  userID: ObjectId,
+  alias: string,
+  phone: string,
+  email: string,
+  role: number
+) {
+  const userData: IJWT = { userID, alias, phone, email, role };
   const token = jwt.sign(userData, jwtSecret);
 
   return token;
