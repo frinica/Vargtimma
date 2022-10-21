@@ -52,7 +52,7 @@ const Navigation: FC = () => {
               </li>
               {user.role === 2 ? (
                 <li className="list-group-item list-group-item-action py-2 ripple bg-black">
-                  <Link to={`/adminboard?id=${user.userID}`}>Admin board</Link>
+                  <Link to="/adminboard">Admin board</Link>
                 </li>
               ) : null}
             </ul>
