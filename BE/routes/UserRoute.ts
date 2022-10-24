@@ -57,6 +57,16 @@ router.get("/", authUser, (req, res) => {
   res.status(200).send(res.locals.user);
 });
 
+// Fetch users
+router.get("/fetch", authUser, async (req, res) => {
+  try {
+    const users = await UserDB.getUsers();
+    res.status(200).send(users);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 // Search for users
 router.post("/search", authUser, async (req, res) => {
   const alias = req.body.search;
@@ -76,6 +86,19 @@ router.post("/search", authUser, async (req, res) => {
     });
     console.log(userArray);
     res.status(200).send(userArray);
+  }
+});
+
+// Update user
+router.put("/update", authUser, async (req, res) => {
+  const user = req.body;
+
+  try {
+    await UserDB.updateUser(user);
+    res.status(200).send("User updated successfully");
+  } catch (error) {
+    res.sendStatus(400);
+    console.log(error);
   }
 });
 

@@ -1,7 +1,17 @@
-import { FC, useEffect, useState } from "react";
-import { Button, Collapse } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { userData } from "../../services/auth.service";
+import { ChangeEvent, FC, useEffect, useState } from "react";
+import {
+  Badge,
+  Button,
+  ButtonGroup,
+  Collapse,
+  ListGroup,
+  ToggleButton,
+} from "react-bootstrap";
+import { Form, Route, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { isNotEmittedStatement } from "typescript";
+import Search from "../../components/Search";
+import { IUser } from "../../models/User";
+import { fetchUsers, userData } from "../../services/auth.service";
 
 const AdminPage: FC = () => {
   const navigate = useNavigate();
@@ -10,10 +20,19 @@ const AdminPage: FC = () => {
     alias: "",
     phone: "",
     email: "",
-    role: null,
+    role: 5,
   };
   const [user, setUser] = useState(initValues);
   const [active, setActive] = useState(0);
+  const [users, setUsers] = useState(["No users registered"]);
+  /*  const [updateUser, setUpdateUser] = useState(false);
+  const [radioValue, setRadioValue] = useState(5);
+
+  const radios = [
+    { name: "Användare", value: 0 },
+    { name: "Moderator", value: 1 },
+    { name: "Administratör", value: 2 },
+  ]; */
 
   useEffect(() => {
     const getUser = async () => {
@@ -21,6 +40,14 @@ const AdminPage: FC = () => {
       setUser(currentUser);
     };
     getUser();
+  }, []);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const fetchedUsers = await fetchUsers();
+      setUsers(fetchedUsers);
+    };
+    getUsers();
   }, []);
 
   return (
@@ -62,11 +89,58 @@ const AdminPage: FC = () => {
           </Button>
           <Collapse className="mt-3" in={active === 2}>
             <div>
-              <p>Jane Doe</p>
-              <p>Jane Doe</p>
-              <p>Jane Doe</p>
-              <p>John Doe</p>
-              <p>John Doe</p>
+              <ListGroup as="ol">
+                {users.map((u) => {
+                  return (
+                    <ListGroup.Item
+                      as="li"
+                      variant="dark"
+                      className="d-flex justify-content-between align-items-start"
+                      key={user.userID}
+                    >
+                      <div className="ms-2 me-auto">
+                        <div className="fw-bold">{user.alias}</div>
+                        {user.email}
+                      </div>
+                      <Badge bg="success" pill>
+                        Uppdatera
+                      </Badge>
+
+                      <Badge bg="danger" pill>
+                        Blockera
+                      </Badge>
+                      {/* {updateUser ? (
+                        <ButtonGroup className="mb-2">
+                          <Button
+                            variant="danger"
+                            size="sm"
+                            className="fw-bold"
+                            onClick={() => setUpdateUser(false)}
+                          >
+                            X
+                          </Button>
+                          {radios.map((radio, i) => (
+                            <ToggleButton
+                              key={i}
+                              id={`radio-${i}`}
+                              type="radio"
+                              variant="secondary"
+                              name="radio"
+                              value={radio.value}
+                              checked={radioValue === radio.value}
+                              onChange={(e: any) => {
+                                update(e, user);
+                              }}
+                            >
+                              {radio.name}
+                            </ToggleButton>
+                          ))}
+                        </ButtonGroup>
+                      ) : null} */}
+                    </ListGroup.Item>
+                  );
+                })}
+              </ListGroup>
             </div>
           </Collapse>
         </div>
@@ -86,7 +160,7 @@ const AdminPage: FC = () => {
           </Button>
           <Collapse className="mt-3" in={active === 3}>
             <div>
-              <p>Sök</p>
+              <Search />
             </div>
           </Collapse>
         </div>

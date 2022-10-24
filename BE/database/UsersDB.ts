@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import IUser from "../models/UserModel";
 import { getDB } from "./MongoDB";
 
@@ -32,6 +33,14 @@ export const UserDB = {
     return user;
   },
 
+  // Fetch all users
+  async getUsers() {
+    const collection = await getCollection();
+    const users = collection.find().toArray();
+
+    return users;
+  },
+
   // Get matching users from search
   async searchUsers(alias?: string, phone?: string) {
     const aToLowerCase = alias?.toLowerCase();
@@ -44,5 +53,15 @@ export const UserDB = {
       .toArray();
 
     return users;
+  },
+
+  // Update a user
+  async updateUser(user: IUser) {
+    const collection = await getCollection();
+    const res = await collection.findOneAndUpdate(
+      { email: user.email },
+      { $set: { role: user.role } }
+    );
+    return res;
   },
 };

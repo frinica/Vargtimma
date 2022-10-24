@@ -60,9 +60,16 @@ export const userData = async () => {
   return res.data;
 };
 
+// Fetch all users
+export const fetchUsers = async () => {
+  const res = await axios.get(API_URL + "fetch", {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};
+
 // Get search results
 export const searchUser = async (search: { search: string }) => {
-  console.log(search);
   const res = await axios.post(API_URL + "search", search, {
     headers: getAuthHeader(),
   });

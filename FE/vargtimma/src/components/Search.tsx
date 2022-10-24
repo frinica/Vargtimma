@@ -1,9 +1,9 @@
 import { Field, Form, Formik } from "formik";
 import { FC, useState } from "react";
 import { Button } from "react-bootstrap";
-import { searchUser } from "../../services/auth.service";
+import { searchUser } from "../services/auth.service";
 
-const SearchPage: FC = () => {
+const Search: FC = () => {
   const initValues = { alias: "", phone: "" };
   const initSearch = { search: "" };
 
@@ -55,4 +55,4 @@ const SearchPage: FC = () => {
     </>
   );
 };
-export default SearchPage;
+export default Search;

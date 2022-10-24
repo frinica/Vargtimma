@@ -5,6 +5,7 @@ export interface IUser {
   phone?: string;
   email: string;
   password: string;
+  role: number;
 }
 
 export interface IRegister {

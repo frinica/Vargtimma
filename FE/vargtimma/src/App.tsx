@@ -4,11 +4,10 @@ import "./App.css";
 import CommunityChat from "./pages/community/CommunityChat";
 import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
-import Navigation from "./pages/Navigation";
+import Navigation from "./components/Navigation";
 import LoginPage from "./pages/users/Login";
 import RegisterPage from "./pages/users/Register";
-import ContactsPage from "./pages/contacts/Contacts";
-import SearchPage from "./pages/contacts/Search";
+import SearchPage from "./components/Search";
 import AdminPage from "./pages/admin/AdminBoard";
 
 const App = () => {
@@ -40,7 +39,6 @@ const App = () => {
             <Route path="/start" element={<HomePage />} />
             <Route path="/community" element={<CommunityChat />} />
             <Route path="/adminboard" element={<AdminPage />} />
-            <Route path="/search" element={<SearchPage />} />
           </Routes>
         </main>
       </Router>
