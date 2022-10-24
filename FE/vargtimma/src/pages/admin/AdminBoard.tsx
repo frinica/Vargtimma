@@ -1,4 +1,5 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { ObjectId } from "mongodb";
+import { FC, useEffect, useState } from "react";
 import {
   Badge,
   Button,
@@ -7,14 +8,18 @@ import {
   ListGroup,
   ToggleButton,
 } from "react-bootstrap";
-import { Form, Route, useNavigate, useRouteLoaderData } from "react-router-dom";
-import { isNotEmittedStatement } from "typescript";
 import Search from "../../components/Search";
-import { IUser } from "../../models/User";
-import { fetchUsers, userData } from "../../services/auth.service";
+import { IUpdate } from "../../models/User";
+import { userData } from "../../services/auth.service";
+import { fetchUsers, update } from "../../services/user.service";
+
+interface UpdatingUser {
+  alias: string;
+  phone: string;
+  email: string;
+}
 
 const AdminPage: FC = () => {
-  const navigate = useNavigate();
   const initValues = {
     userID: "",
     alias: "",
@@ -24,15 +29,35 @@ const AdminPage: FC = () => {
   };
   const [user, setUser] = useState(initValues);
   const [active, setActive] = useState(0);
-  const [users, setUsers] = useState(["No users registered"]);
-  /*  const [updateUser, setUpdateUser] = useState(false);
+  const [users, setUsers] = useState([initValues]);
+  const [updateUser, setUpdateUser] = useState(false);
   const [radioValue, setRadioValue] = useState(5);
 
   const radios = [
     { name: "Användare", value: 0 },
     { name: "Moderator", value: 1 },
     { name: "Administratör", value: 2 },
-  ]; */
+  ];
+
+  const updateUserRole = async (u: UpdatingUser, radioValue: number) => {
+    const { alias, phone, email } = u;
+    const user = {
+      alias,
+      phone,
+      email,
+      role: radioValue,
+    };
+    const success = await update(user);
+    try {
+      if (success) {
+        alert("Användarens roll har uppdaterats");
+      } else {
+        alert("Användaren kunde inte uppdateras");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const getUser = async () => {
@@ -96,20 +121,24 @@ const AdminPage: FC = () => {
                       as="li"
                       variant="dark"
                       className="d-flex justify-content-between align-items-start"
-                      key={user.userID}
+                      key={u.userID}
                     >
                       <div className="ms-2 me-auto">
-                        <div className="fw-bold">{user.alias}</div>
-                        {user.email}
+                        <div className="fw-bold">{u.alias}</div>
+                        {u.email}
                       </div>
-                      <Badge bg="success" pill>
+                      <Badge
+                        bg="success"
+                        pill
+                        onClick={() => setUpdateUser(true)}
+                      >
                         Uppdatera
                       </Badge>
 
                       <Badge bg="danger" pill>
                         Blockera
                       </Badge>
-                      {/* {updateUser ? (
+                      {updateUser ? (
                         <ButtonGroup className="mb-2">
                           <Button
                             variant="danger"
@@ -127,16 +156,24 @@ const AdminPage: FC = () => {
                               variant="secondary"
                               name="radio"
                               value={radio.value}
-                              checked={radioValue === radio.value}
+                              checked={radio.value === user.role}
                               onChange={(e: any) => {
-                                update(e, user);
+                                setRadioValue(e.target.value);
                               }}
                             >
                               {radio.name}
                             </ToggleButton>
                           ))}
+                          <Button
+                            variant="success"
+                            size="sm"
+                            className="fw-bold"
+                            onClick={() => updateUserRole(u, radioValue)}
+                          >
+                            Go
+                          </Button>
                         </ButtonGroup>
-                      ) : null} */}
+                      ) : null}
                     </ListGroup.Item>
                   );
                 })}

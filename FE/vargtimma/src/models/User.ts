@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface IUser {
   firstName: string;
   lastName: string;
@@ -26,4 +28,11 @@ export interface ILogin {
 export interface ISearch {
   alias: string;
   phone: string;
+}
+
+export interface IUpdate {
+  alias: string;
+  phone?: string;
+  email: string;
+  role: number;
 }

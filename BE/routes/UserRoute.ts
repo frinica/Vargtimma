@@ -91,6 +91,7 @@ router.post("/search", authUser, async (req, res) => {
 
 // Update user
 router.put("/update", authUser, async (req, res) => {
+  console.log(req.body);
   const user = req.body;
 
   try {

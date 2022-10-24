@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ILogin, IRegister, ISearch } from "../models/User";
+import { ILogin, IRegister } from "../models/User";
 
 const API_URL = `${process.env.REACT_APP_API_URL}user/`;
 
@@ -55,22 +55,6 @@ export const checkIsLoggedIn = () => {
 // Get user data
 export const userData = async () => {
   const res = await axios.get(API_URL, {
-    headers: getAuthHeader(),
-  });
-  return res.data;
-};
-
-// Fetch all users
-export const fetchUsers = async () => {
-  const res = await axios.get(API_URL + "fetch", {
-    headers: getAuthHeader(),
-  });
-  return res.data;
-};
-
-// Get search results
-export const searchUser = async (search: { search: string }) => {
-  const res = await axios.post(API_URL + "search", search, {
     headers: getAuthHeader(),
   });
   return res.data;

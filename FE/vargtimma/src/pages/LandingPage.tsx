@@ -7,7 +7,7 @@ const LandingPage: FC = () => {
         <div>
           <img />
         </div>
-        <h1 className="mt-4 mb-5 app-name">VARGTIMMA</h1>
+        <h1 className="mt-4 mb-5">VARGTIMMA</h1>
         <div className="d-grid gap-3 col-6 mx-auto">
           <Button href="/login" variant="custom" size="lg">
             Logga in

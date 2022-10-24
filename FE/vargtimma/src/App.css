@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: rgb(43, 42, 42);
+  background-color: #1d1e22;
 }
 
 .App {
@@ -19,11 +19,23 @@ body {
   padding: 1rem;
 }
 
+h1 {
+  background-color: #f3ec78;
+  background-image: linear-gradient(to top, #202950, #3c396a, #5b4a83, #7c5a9b);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  letter-spacing: 0.2rem;
+}
+
 /* Buttons */
 .btn-custom {
-  background-color: #ffb34a;
+  background-image: linear-gradient(to right bottom, #52416f, #6f3f77, #8f3a76);
   color: white;
-  box-shadow: #5a5959 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
   letter-spacing: 1.3px;
 }
 
@@ -32,14 +44,23 @@ body {
   max-width: 350px;
   min-height: 500px;
   position: relative;
-  border: 1px solid rgba(156, 154, 154, 0.867);
+  border: 1px solid rgba(73, 73, 73, 0.867);
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: #f06d4c 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 /* Navigation */
 .sidebar {
+  background-image: linear-gradient(
+    to right bottom,
+    #051937,
+    #192345,
+    #2c2d53,
+    #3e3761,
+    #52416f
+  );
   position: fixed;
   top: 0;
   bottom: 0;
@@ -68,6 +89,11 @@ body {
   padding-top: 0.5rem;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.bgList {
+  background: transparent;
+  border: none;
 }
 
 /* User cards */

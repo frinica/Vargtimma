@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import { FC, useState } from "react";
 import { Button } from "react-bootstrap";
-import { searchUser } from "../services/auth.service";
+import { searchUser } from "../services/user.service";
 
 const Search: FC = () => {
   const initValues = { alias: "", phone: "" };
