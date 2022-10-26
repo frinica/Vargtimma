@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "nodemon app.ts",
     "socket": "nodemon socket-server.ts",
-    "dev": "concurrently \"npm run serve\" \"npm run socket\""
+    "dev": "concurrently \"npm run serve\" \"npm run socket\"",
+    "build": "tsc"
   },
   "author": "Frida Nicander",
   "license": "ISC",
