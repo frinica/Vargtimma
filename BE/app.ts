@@ -5,7 +5,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 const userRouter = require("./routes/UserRoute");
-const options = { origin: "*" };
+const options = { origin: process.env.REQUEST_URL, credentials: true };
 
 const app = express();
 app.use(cors(options));
