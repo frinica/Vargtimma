@@ -55,10 +55,10 @@ io.on("connection", (socket: any) => {
     "join",
     ({ username, room }: { username: string; room: string }, callBack: any) => {
       const { user, error } = addUser({ id: socket.id, username, room });
-      if (error) return callBack(error);
+      if (error) return callBack("From callback: ", error);
       socket.join(user.room, (error: any) => {
         if (error) {
-          console.log(error);
+          console.log("Error when joining: ", error);
           return;
         }
       });
@@ -87,4 +87,6 @@ io.on("connection", (socket: any) => {
   });
 });
 
-server.listen(PORT, () => console.log(`Socket-server is running on ${PORT}`));
+server.listen(PORT, () =>
+  console.log(`Socket-server is running on port ${PORT}`)
+);
