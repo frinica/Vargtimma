@@ -41,9 +41,10 @@ const { addUser, removeUser } = require("./socket/user");
     origin: "http://localhost:3000",
   },
 }); */
+const options = process.env.REQUEST_URL;
 const io = require("socket.io")(server, {
   cors: {
-    origin: "*",
+    origin: options,
   },
 });
 
