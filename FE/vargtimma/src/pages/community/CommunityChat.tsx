@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import io from "socket.io-client";
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = process.env.REACT_APP_SOCKET_URL || "";
 let socket: any;
 const initMessages = [{ user: "", text: "" }];
 
