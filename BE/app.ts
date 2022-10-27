@@ -6,9 +6,10 @@ import cors from "cors";
 import { authUser } from "./middlewares";
 
 const userRouter = require("./routes/UserRoute");
+const options = { origin: process.env.REQUEST_URL };
 
 const app = express();
-app.use(cors({ origin: process.env.REQUEST_URL }));
+app.use(cors(options));
 app.use(morgan("tiny")); // Debug
 app.use(express.json());
 
