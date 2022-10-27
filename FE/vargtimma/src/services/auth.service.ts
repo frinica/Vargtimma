@@ -1,11 +1,10 @@
 import axios from "axios";
 import { ILogin, IRegister } from "../models/User";
 
-const API_URL = `${process.env.REACT_APP_API_URL}user/`;
+const API_URL = `${process.env.REACT_APP_API_URL}/user`;
 
 // Register a new user
 export const register = async (regData: IRegister) => {
-  console.log(API_URL);
   const res = await axios.post(API_URL + "register", regData);
   return res.status === 200;
 };
