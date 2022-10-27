@@ -44,7 +44,7 @@ const { addUser, removeUser } = require("./socket/user");
 const options = process.env.REQUEST_URL;
 const io = require("socket.io")(server, {
   cors: {
-    origin: options,
+    origin: "https://vargtimma.netlify.app",
   },
 });
 
