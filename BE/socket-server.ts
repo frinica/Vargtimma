@@ -42,7 +42,6 @@ const { addUser, removeUser } = require("./socket/user");
   },
 }); */
 const io = require("socket.io")(server, {
-  transports: ["websocket"],
   cors: {
     origin: "*",
   },
