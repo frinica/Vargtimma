@@ -15,23 +15,27 @@ interface searchResult {
 router.post("/register", async (req, res) => {
   const { firstName, lastName, alias, phone, email, password } = req.body;
 
-  const existingUser = await UserDB.getExistingUser(alias, email);
-  if (existingUser) {
-    res.sendStatus(400);
-  } else {
-    const hashedPassword = hashPassword(password);
-    const user: IUser = {
-      firstName,
-      lastName,
-      alias,
-      phone,
-      email,
-      hashedPassword,
-      role: 0,
-    };
-    const userID = await UserDB.insertUser(user);
+  try {
+    const existingUser = await UserDB.getExistingUser(alias, email);
+    if (existingUser) {
+      res.sendStatus(400);
+    } else {
+      const hashedPassword = hashPassword(password);
+      const user: IUser = {
+        firstName,
+        lastName,
+        alias,
+        phone,
+        email,
+        hashedPassword,
+        role: 0,
+      };
+      const userID = await UserDB.insertUser(user);
 
-    res.status(200).send({ userID });
+      res.status(200).send({ userID });
+    }
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
@@ -40,16 +44,26 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await UserDB.getExistingUser("", email);
 
-  if (user) {
-    const validatePass = comparePassword(password, user.hashedPassword);
-    if (validatePass) {
-      const token = getJWT(user._id, user.alias, user.phone, email, user.role);
-      res.status(200).send(token);
+  try {
+    if (user) {
+      const validatePass = comparePassword(password, user.hashedPassword);
+      if (validatePass) {
+        const token = getJWT(
+          user._id,
+          user.alias,
+          user.phone,
+          email,
+          user.role
+        );
+        res.status(200).send(token);
+      } else {
+        res.sendStatus(400);
+      }
     } else {
       res.sendStatus(400);
     }
-  } else {
-    res.sendStatus(400);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
@@ -73,19 +87,23 @@ router.post("/search", authUser, async (req, res) => {
   const phone = req.body.search;
   const users = await UserDB.searchUsers(alias, phone);
 
-  if (!users) {
-    res.sendStatus(404);
-  } else {
-    let userArray: searchResult[] = [];
-    users.forEach((u) => {
-      const user = {
-        alias: u.alias!,
-        phone: u.phone!,
-      };
-      userArray.push(user);
-    });
-    console.log(userArray);
-    res.status(200).send(userArray);
+  try {
+    if (!users) {
+      res.sendStatus(404);
+    } else {
+      let userArray: searchResult[] = [];
+      users.forEach((u) => {
+        const user = {
+          alias: u.alias!,
+          phone: u.phone!,
+        };
+        userArray.push(user);
+      });
+      console.log(userArray);
+      res.status(200).send(userArray);
+    }
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
