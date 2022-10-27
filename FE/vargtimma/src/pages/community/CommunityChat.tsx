@@ -14,7 +14,12 @@ const CommunityChat: FC = () => {
 
   // Connect user to the socket
   useEffect(() => {
-    socket = io("ws://" + ENDPOINT);
+    socket = io(ENDPOINT, {
+      withCredentials: true,
+      extraHeaders: {
+        "my-custom-header": "abcd",
+      },
+    });
 
     socket.emit("join", { username, room }, (error: any) => {
       console.log("Connected to socket");
