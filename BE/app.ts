@@ -3,10 +3,9 @@ config();
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import { authUser } from "./middlewares";
 
 const userRouter = require("./routes/UserRoute");
-const options = { origin: process.env.REQUEST_URL };
+const options = { origin: "*" };
 
 const app = express();
 app.use(cors(options));
