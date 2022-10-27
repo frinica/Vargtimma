@@ -1,5 +1,3 @@
-import { ObjectId } from "mongodb";
-
 export interface IUser {
   firstName: string;
   lastName: string;
