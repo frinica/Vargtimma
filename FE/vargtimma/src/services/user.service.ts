@@ -2,7 +2,7 @@ import axios from "axios";
 import { IUpdate } from "../models/User";
 import { getAuthHeader } from "./auth.service";
 
-const API_URL = `${process.env.REACT_APP_API_URL}/user`;
+const API_URL = `${process.env.REACT_APP_API_URL}user/`;
 
 // Fetch all users
 export const fetchUsers = async () => {
