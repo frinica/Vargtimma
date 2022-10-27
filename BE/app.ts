@@ -8,7 +8,7 @@ import { authUser } from "./middlewares";
 const userRouter = require("./routes/UserRoute");
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: process.env.REQUEST_URL, credentials: true }));
 app.use(morgan("tiny")); // Debug
 app.use(express.json());
 
