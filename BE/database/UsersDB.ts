@@ -43,15 +43,13 @@ export const UserDB = {
 
   // Get matching users from search
   async searchUsers(alias?: string, phone?: string) {
-    const aToLowerCase = alias?.toLowerCase();
+    /* const aToLowerCase = alias?.toLowerCase(); */
     const collection = await getCollection();
-
-    const users = collection
+    const users = await collection
       .find({
-        $or: [{ alias: aToLowerCase }, { phone: phone }],
+        $or: [{ alias: alias }, { phone: phone }],
       })
       .toArray();
-
     return users;
   },
 

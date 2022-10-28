@@ -94,12 +94,13 @@ router.post("/search", authUser, async (req, res) => {
       let userArray: searchResult[] = [];
       users.forEach((u) => {
         const user = {
+          id: u._id!,
           alias: u.alias!,
           phone: u.phone!,
+          email: u.email!,
         };
         userArray.push(user);
       });
-      console.log(userArray);
       res.status(200).send(userArray);
     }
   } catch (error) {
