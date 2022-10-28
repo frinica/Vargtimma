@@ -1,4 +1,5 @@
 import express from "express";
+import { ObjectId } from "mongodb";
 import { BlacklistDB } from "../database/BlacklistDB";
 import { UserDB } from "../database/UsersDB";
 import { authUser } from "../middlewares";
@@ -108,6 +109,19 @@ router.post("/search", authUser, async (req, res) => {
       });
       res.status(200).send(userArray);
     }
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+// Fetch one user
+router.get("/:id", authUser, async (req, res) => {
+  try {
+    const id = new ObjectId(req.params.id);
+    const { hashedPassword, ...resUser } = await UserDB.getOneUser(id);
+    const user = resUser;
+
+    res.status(200).send(user);
   } catch (error) {
     res.status(400).send(error);
   }

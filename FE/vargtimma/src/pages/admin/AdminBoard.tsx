@@ -60,6 +60,10 @@ const AdminPage: FC = () => {
     }
   };
 
+  const blockUser = async (id: string) => {
+    console.log("Blocked the bastard ", id);
+  };
+
   useEffect(() => {
     const getUser = async () => {
       const currentUser = await userData();
@@ -119,7 +123,14 @@ const AdminPage: FC = () => {
                         <p>{report.reason}</p>
                       </div>
                       <div className="d-flex">
-                        <Badge bg="danger" className="mx-1" pill>
+                        <Badge
+                          bg="danger"
+                          className="mx-1"
+                          onClick={() => {
+                            blockUser(report.userID);
+                          }}
+                          pill
+                        >
                           Blockera
                         </Badge>
                         <Badge bg="danger" pill>

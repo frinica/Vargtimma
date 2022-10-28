@@ -6,6 +6,7 @@ import cors from "cors";
 
 const userRouter = require("./routes/UserRoute");
 const reportRouter = require("./routes/ReportedUserRoute");
+const blacklistRouter = require("./routes/BlacklistRoute");
 const options = { origin: process.env.REQUEST_URL, credentials: true };
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use("/user", userRouter);
 app.use("/report", reportRouter);
+app.use("/blacklist", blacklistRouter);
 
 app.get("/", (req, res) => {
   console.log(res.locals.user);

@@ -33,11 +33,19 @@ export const UserDB = {
     return user;
   },
 
+  //Get user by ID
+  async getOneUser(id: ObjectId) {
+    const collection = await getCollection();
+
+    const user = collection.findOne({ _id: id });
+
+    return user;
+  },
+
   // Fetch all users
   async getUsers() {
     const collection = await getCollection();
     const users = collection.find().toArray();
-
     return users;
   },
 
