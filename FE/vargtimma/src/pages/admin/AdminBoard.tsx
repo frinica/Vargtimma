@@ -118,8 +118,8 @@ const AdminPage: FC = () => {
                         <p>Anledning:</p>
                         <p>{report.reason}</p>
                       </div>
-                      <div>
-                        <Badge bg="danger" pill>
+                      <div className="d-flex">
+                        <Badge bg="danger" className="mx-1" pill>
                           Blockera
                         </Badge>
                         <Badge bg="danger" pill>

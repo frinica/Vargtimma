@@ -1,4 +1,5 @@
 import express from "express";
+import { BlacklistDB } from "../database/BlacklistDB";
 import { UserDB } from "../database/UsersDB";
 import { authUser } from "../middlewares";
 import IUser from "../models/UserModel";
@@ -17,8 +18,12 @@ router.post("/register", async (req, res) => {
 
   try {
     const existingUser = await UserDB.getExistingUser(alias, email);
-    if (existingUser) {
-      res.sendStatus(400);
+    const blacklistUser = await BlacklistDB.getBlacklistedCredentials({
+      phone,
+      email,
+    });
+    if (existingUser || blacklistUser) {
+      res.status(400).send("User already exist or has been blocked");
     } else {
       const hashedPassword = hashPassword(password);
       const user: IUser = {
