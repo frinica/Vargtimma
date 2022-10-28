@@ -8,8 +8,9 @@ import {
   ToggleButton,
 } from "react-bootstrap";
 import Search from "../../components/Search";
-import { IUpdate } from "../../models/User";
+import { IReport } from "../../models/Report";
 import { userData } from "../../services/auth.service";
+import { fetchReports } from "../../services/report.service";
 import { fetchUsers, update } from "../../services/user.service";
 
 interface UpdatingUser {
@@ -29,6 +30,7 @@ const AdminPage: FC = () => {
   const [user, setUser] = useState(initValues);
   const [active, setActive] = useState(0);
   const [users, setUsers] = useState([initValues]);
+  const [reports, setReports] = useState<IReport[]>([]);
   const [updateUser, setUpdateUser] = useState(false);
   const [radioValue, setRadioValue] = useState(5);
 
@@ -71,7 +73,13 @@ const AdminPage: FC = () => {
       const fetchedUsers = await fetchUsers();
       setUsers(fetchedUsers);
     };
+    const getReports = async () => {
+      const fetchedReports = await fetchReports();
+      setReports(fetchedReports);
+    };
+
     getUsers();
+    getReports();
   }, []);
 
   return (
@@ -93,7 +101,35 @@ const AdminPage: FC = () => {
           </Button>
           <Collapse className="mt-3" in={active === 1}>
             <div>
-              <p>John Doe</p>
+              <ListGroup as="ol">
+                {reports.map((report, i) => {
+                  return (
+                    <ListGroup.Item
+                      as="li"
+                      variant="dark"
+                      className="d-flex justify-content-between align-items-start"
+                      key={i}
+                    >
+                      <div className="ms-2 me-auto">
+                        <div className="fw-bold">{report.userID}</div>
+                        <p>Rapporterad av: {report.reporterID}</p>
+                      </div>
+                      <div>
+                        <p>Anledning:</p>
+                        <p>{report.reason}</p>
+                      </div>
+                      <div>
+                        <Badge bg="danger" pill>
+                          Blockera
+                        </Badge>
+                        <Badge bg="danger" pill>
+                          Ta bort
+                        </Badge>
+                      </div>
+                    </ListGroup.Item>
+                  );
+                })}
+              </ListGroup>
             </div>
           </Collapse>
         </div>

@@ -12,3 +12,11 @@ export const insertReport = async (reportData: IReport) => {
   });
   return res.status;
 };
+
+// Fetch reports
+export const fetchReports = async () => {
+  const res = await axios.get(API_URL + "fetch", {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};

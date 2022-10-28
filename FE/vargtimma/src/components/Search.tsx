@@ -39,15 +39,17 @@ const Search: FC = () => {
         }}
       >
         <Form>
-          <Field
-            type="text"
-            name="search"
-            placeholder="Sök på alias eller telefonnummer"
-            className="form-control"
-          />
-          <Button type="submit" variant="custom">
-            Sök
-          </Button>
+          <div className="d-flex">
+            <Field
+              type="text"
+              name="search"
+              placeholder="Sök på alias eller telefonnummer"
+              className="form-control mx-2"
+            />
+            <Button type="submit" variant="custom">
+              Sök
+            </Button>
+          </div>
         </Form>
       </Formik>
 
