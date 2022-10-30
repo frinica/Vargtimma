@@ -8,9 +8,9 @@ import {
   ToggleButton,
 } from "react-bootstrap";
 import Search from "../../components/Search";
-import { IReport } from "../../models/Report";
+import { IBlacklist, IReport } from "../../models/Report";
 import { userData } from "../../services/auth.service";
-import { fetchReports } from "../../services/report.service";
+import { blockUser, fetchReports } from "../../services/report.service";
 import { fetchUsers, update } from "../../services/user.service";
 
 interface UpdatingUser {
@@ -60,8 +60,14 @@ const AdminPage: FC = () => {
     }
   };
 
-  const blockUser = async (email: string, phone: string) => {
-    console.log("Blocked the bastard ", email, phone);
+  const blockingUser = async (credentials: IBlacklist) => {
+    const success = await blockUser(credentials);
+
+    if (success === 200) {
+      alert("Användarens uppgifter har blockerats");
+    } else {
+      alert("Användaren kunde inte blockeras");
+    }
   };
 
   useEffect(() => {
@@ -126,19 +132,19 @@ const AdminPage: FC = () => {
                           <p>{report.reason}</p>
                         </div>
                         <div className="d-flex">
-                          <Badge
-                            bg="danger"
+                          <Button
+                            variant="danger"
+                            size="sm"
                             className="mx-1"
                             onClick={() => {
-                              blockUser(
-                                report.userData[0].email,
-                                report.userData[0].phone
-                              );
+                              blockingUser({
+                                phone: report.userData[0].phone,
+                                email: report.userData[0].email,
+                              });
                             }}
-                            pill
                           >
                             Blockera
-                          </Badge>
+                          </Button>
                           <Badge bg="danger" pill>
                             Ta bort
                           </Badge>

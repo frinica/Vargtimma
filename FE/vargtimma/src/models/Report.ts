@@ -3,3 +3,8 @@ export interface IReport {
   reporterEmail: string;
   reason: string;
 }
+
+export interface IBlacklist {
+  email: string;
+  phone: string;
+}
