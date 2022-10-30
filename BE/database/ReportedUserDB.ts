@@ -1,7 +1,6 @@
-import { MongoDBNamespace, ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 import IReportedUser from "../models/ReportModel";
 import { getDB } from "./MongoDB";
-import { UserDB } from "./UsersDB";
 
 const COLLECTION_NAME = "reported_user";
 

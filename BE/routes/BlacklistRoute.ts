@@ -5,11 +5,12 @@ import IBlacklist from "../models/BlacklistModel";
 const router = express.Router();
 
 router.post("/insert", authUser, async (req, res) => {
-  const { phone, email } = req.body;
+  const { phone, email, reportID } = req.body;
   try {
     const blacklist: IBlacklist = {
       phone,
       email,
+      reportID,
     };
     const blackListID = await BlacklistDB.insertBlacklist(blacklist);
 

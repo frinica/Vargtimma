@@ -7,4 +7,5 @@ export interface IReport {
 export interface IBlacklist {
   email: string;
   phone: string;
+  reportID: string;
 }

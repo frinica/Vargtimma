@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
 import IBlacklist from "../models/BlacklistModel";
 import { getDB } from "./MongoDB";
+import { ReportedUserDB } from "./ReportedUserDB";
 
 const COLLECTION_NAME = "blacklist";
 
@@ -11,10 +13,16 @@ export const getCollection = async () => {
 };
 
 export const BlacklistDB = {
-  // Insert to DB
-  async insertBlacklist(credentials: IBlacklist) {
+  // Insert to DB and remove report & user
+  async insertBlacklist(blockData: any) {
+    const credentials = {
+      phone: blockData.phone,
+      email: blockData.email,
+    };
+    const report = blockData.reportID;
     const collection = await getCollection();
     const res = await collection.insertOne(credentials);
+    await ReportedUserDB.deleteReport(report);
 
     return res.insertedId;
   },

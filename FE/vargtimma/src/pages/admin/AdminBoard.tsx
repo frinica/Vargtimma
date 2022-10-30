@@ -60,8 +60,8 @@ const AdminPage: FC = () => {
     }
   };
 
-  const blockingUser = async (credentials: IBlacklist) => {
-    const success = await blockUser(credentials);
+  const blockingUser = async (blockData: any) => {
+    const success = await blockUser(blockData);
 
     if (success === 200) {
       alert("Användarens uppgifter har blockerats");
@@ -140,6 +140,7 @@ const AdminPage: FC = () => {
                               blockingUser({
                                 phone: report.userData[0].phone,
                                 email: report.userData[0].email,
+                                reportID: report._id,
                               });
                             }}
                           >
