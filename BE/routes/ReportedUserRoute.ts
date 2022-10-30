@@ -7,11 +7,11 @@ const router = express.Router();
 
 // Insert a new report
 router.post("/insert", authUser, async (req, res) => {
-  const { userID, reporterID, reason } = req.body;
+  const { userEmail, reporterEmail, reason } = req.body;
   try {
     const report: IReportedUser = {
-      userID,
-      reporterID,
+      userEmail,
+      reporterEmail,
       reason,
     };
     const reportID = await ReportedUserDB.insertReportedUser(report);

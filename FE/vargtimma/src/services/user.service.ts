@@ -20,6 +20,12 @@ export const searchUser = async (search: { search: string }) => {
   return res.data;
 };
 
+// Get one users data
+export const getOneUser = async (id: string) => {
+  const res = await axios.get(API_URL + id, { headers: getAuthHeader() });
+  return res.data;
+};
+
 // Update a user
 export const update = async (userData: IUpdate) => {
   console.log(userData);

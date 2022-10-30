@@ -30,7 +30,7 @@ const AdminPage: FC = () => {
   const [user, setUser] = useState(initValues);
   const [active, setActive] = useState(0);
   const [users, setUsers] = useState([initValues]);
-  const [reports, setReports] = useState<IReport[]>([]);
+  const [reports, setReports] = useState<any[]>([]);
   const [updateUser, setUpdateUser] = useState(false);
   const [radioValue, setRadioValue] = useState(5);
 
@@ -60,8 +60,8 @@ const AdminPage: FC = () => {
     }
   };
 
-  const blockUser = async (id: string) => {
-    console.log("Blocked the bastard ", id);
+  const blockUser = async (email: string, phone: string) => {
+    console.log("Blocked the bastard ", email, phone);
   };
 
   useEffect(() => {
@@ -106,40 +106,49 @@ const AdminPage: FC = () => {
           <Collapse className="mt-3" in={active === 1}>
             <div>
               <ListGroup as="ol">
-                {reports.map((report, i) => {
-                  return (
-                    <ListGroup.Item
-                      as="li"
-                      variant="dark"
-                      className="d-flex justify-content-between align-items-start"
-                      key={i}
-                    >
-                      <div className="ms-2 me-auto">
-                        <div className="fw-bold">{report.userID}</div>
-                        <p>Rapporterad av: {report.reporterID}</p>
-                      </div>
-                      <div>
-                        <p>Anledning:</p>
-                        <p>{report.reason}</p>
-                      </div>
-                      <div className="d-flex">
-                        <Badge
-                          bg="danger"
-                          className="mx-1"
-                          onClick={() => {
-                            blockUser(report.userID);
-                          }}
-                          pill
-                        >
-                          Blockera
-                        </Badge>
-                        <Badge bg="danger" pill>
-                          Ta bort
-                        </Badge>
-                      </div>
-                    </ListGroup.Item>
-                  );
-                })}
+                {reports ? (
+                  reports.map((report, i) => {
+                    return (
+                      <ListGroup.Item
+                        as="li"
+                        variant="dark"
+                        className="d-flex justify-content-between align-items-start"
+                        key={i}
+                      >
+                        <div className="ms-2 me-auto">
+                          <div className="fw-bold">
+                            {report.userData[0].email}
+                          </div>
+                          <p>Rapporterad av: {report.reporterData[0].alias}</p>
+                        </div>
+                        <div>
+                          <p>Anledning:</p>
+                          <p>{report.reason}</p>
+                        </div>
+                        <div className="d-flex">
+                          <Badge
+                            bg="danger"
+                            className="mx-1"
+                            onClick={() => {
+                              blockUser(
+                                report.userData[0].email,
+                                report.userData[0].phone
+                              );
+                            }}
+                            pill
+                          >
+                            Blockera
+                          </Badge>
+                          <Badge bg="danger" pill>
+                            Ta bort
+                          </Badge>
+                        </div>
+                      </ListGroup.Item>
+                    );
+                  })
+                ) : (
+                  <p>Inga rapporter</p>
+                )}
               </ListGroup>
             </div>
           </Collapse>

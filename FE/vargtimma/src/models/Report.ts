@@ -1,5 +1,5 @@
 export interface IReport {
-  userID: string;
-  reporterID: string;
+  userEmail: string;
+  reporterEmail: string;
   reason: string;
 }

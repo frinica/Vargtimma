@@ -5,7 +5,7 @@ import { getAuthHeader } from "./auth.service";
 const API_URL = `${process.env.REACT_APP_API_URL}report/`;
 
 // Insert a report
-export const insertReport = async (reportData: IReport) => {
+export const insertReport = async (reportData: any) => {
   console.log(reportData);
   const res = await axios.post(API_URL + "insert", reportData, {
     headers: getAuthHeader(),

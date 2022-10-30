@@ -18,9 +18,13 @@ const Search: FC = () => {
     setUser(currentUser);
   };
 
-  const sendReport = async (id: string) => {
+  const sendReport = async (userEmail: string) => {
     const reason = "Placeholder reason";
-    await insertReport({ userID: id, reporterID: user.userID, reason });
+    await insertReport({
+      userEmail: userEmail,
+      reporterEmail: user.email,
+      reason,
+    });
   };
 
   useEffect(() => {
@@ -68,7 +72,7 @@ const Search: FC = () => {
                 size="sm"
                 className="usercard-button"
                 onClick={() => {
-                  sendReport(user.id);
+                  sendReport(user.email);
                 }}
               >
                 Rapportera

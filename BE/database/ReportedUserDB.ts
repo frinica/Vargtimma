@@ -1,6 +1,7 @@
-import { ObjectId } from "mongodb";
+import { MongoDBNamespace, ObjectId } from "mongodb";
 import IReportedUser from "../models/ReportModel";
 import { getDB } from "./MongoDB";
+import { UserDB } from "./UsersDB";
 
 const COLLECTION_NAME = "reported_user";
 
@@ -23,8 +24,26 @@ export const ReportedUserDB = {
   // Fetch all reports
   async getReports() {
     const collection = await getCollection();
-    const reports = collection.find().toArray();
-
+    const reports = collection
+      .aggregate([
+        {
+          $lookup: {
+            from: "users",
+            localField: "userEmail",
+            foreignField: "email",
+            as: "userData",
+          },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "reporterEmail",
+            foreignField: "email",
+            as: "reporterData",
+          },
+        },
+      ])
+      .toArray();
     return reports;
   },
 
