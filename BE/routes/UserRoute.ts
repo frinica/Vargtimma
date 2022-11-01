@@ -141,4 +141,16 @@ router.put("/update", authUser, async (req, res) => {
   }
 });
 
+// Delete user
+router.delete("/:id", authUser, async (req, res) => {
+  try {
+    const id = new ObjectId(req.params.id);
+
+    await UserDB.deleteUser(id);
+    res.sendStatus(200);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 module.exports = router;

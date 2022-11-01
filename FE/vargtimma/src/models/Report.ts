@@ -5,6 +5,7 @@ export interface IReport {
 }
 
 export interface IBlacklist {
+  userID: string;
   email: string;
   phone: string;
   reportID: string;

@@ -39,7 +39,7 @@ router.delete("/:id", authUser, async (req, res) => {
 
     await ReportedUserDB.deleteReport(id);
 
-    res.status(200).send("Report deleted");
+    res.sendStatus(200);
   } catch (error) {
     res.status(400).send(error);
   }

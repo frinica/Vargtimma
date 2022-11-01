@@ -1,5 +1,6 @@
 import express from "express";
 import { BlacklistDB } from "../database/BlacklistDB";
+import { ReportedUserDB } from "../database/ReportedUserDB";
 import { authUser } from "../middlewares";
 import IBlacklist from "../models/BlacklistModel";
 const router = express.Router();

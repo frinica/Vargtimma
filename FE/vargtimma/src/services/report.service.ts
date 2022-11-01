@@ -1,9 +1,10 @@
 import axios from "axios";
-import { IBlacklist, IReport } from "../models/Report";
+import { IBlacklist } from "../models/Report";
 import { getAuthHeader } from "./auth.service";
 
 const API_URL_REPORT = `${process.env.REACT_APP_API_URL}report/`;
 const API_URL_BLOCK = `${process.env.REACT_APP_API_URL}blacklist/`;
+const API_URL_USER = `${process.env.REACT_APP_API_URL}user/`;
 
 // Insert a report
 export const insertReport = async (reportData: any) => {
@@ -23,8 +24,27 @@ export const fetchReports = async () => {
 
 // Block user
 export const blockUser = async (blockData: IBlacklist) => {
-  const res = await axios.post(API_URL_BLOCK + "insert", blockData, {
-    headers: getAuthHeader(),
-  });
-  return res.status;
+  const headers = { headers: getAuthHeader() };
+  // Insert credentials in blacklist collection
+  const blacklistRes = await axios.post(
+    API_URL_BLOCK + "insert",
+    blockData,
+    headers
+  );
+  //Remove report from report_user collection
+  const reportId = blockData.reportID;
+  const reportRes = await axios.delete(API_URL_REPORT + reportId, headers);
+  // Remove blocked user from users collection
+  const userId = blockData.userID;
+  const userRes = await axios.delete(API_URL_USER + userId, headers);
+
+  if (
+    blacklistRes.status === 200 &&
+    reportRes.status === 200 &&
+    userRes.status === 200
+  ) {
+    return 200;
+  } else {
+    return 400;
+  }
 };

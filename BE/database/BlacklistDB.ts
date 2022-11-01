@@ -14,17 +14,16 @@ export const getCollection = async () => {
 
 export const BlacklistDB = {
   // Insert to DB and remove report & user
-  async insertBlacklist(blockData: any) {
+  async insertBlacklist(blockData: IBlacklist) {
     const credentials = {
       phone: blockData.phone,
       email: blockData.email,
     };
-    const report = blockData.reportID;
+
     const collection = await getCollection();
     const res = await collection.insertOne(credentials);
-    await ReportedUserDB.deleteReport(report);
 
-    return res.insertedId;
+    return res;
   },
 
   // Cross reference when registering new user

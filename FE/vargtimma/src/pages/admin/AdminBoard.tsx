@@ -65,6 +65,7 @@ const AdminPage: FC = () => {
 
     if (success === 200) {
       alert("Användarens uppgifter har blockerats");
+      window.location.reload();
     } else {
       alert("Användaren kunde inte blockeras");
     }
@@ -112,7 +113,7 @@ const AdminPage: FC = () => {
           <Collapse className="mt-3" in={active === 1}>
             <div>
               <ListGroup as="ol">
-                {reports ? (
+                {reports.length !== 0 ? (
                   reports.map((report, i) => {
                     return (
                       <ListGroup.Item
@@ -138,6 +139,7 @@ const AdminPage: FC = () => {
                             className="mx-1"
                             onClick={() => {
                               blockingUser({
+                                userID: report.userData[0]._id,
                                 phone: report.userData[0].phone,
                                 email: report.userData[0].email,
                                 reportID: report._id,
@@ -154,7 +156,7 @@ const AdminPage: FC = () => {
                     );
                   })
                 ) : (
-                  <p>Inga rapporter</p>
+                  <p>🌟Inga rapporter🌟</p>
                 )}
               </ListGroup>
             </div>

@@ -70,4 +70,15 @@ export const UserDB = {
     );
     return res;
   },
+
+  // Delete user
+  async deleteUser(id: ObjectId) {
+    const collection = await getCollection();
+    try {
+      const res = await collection.deleteOne({ _id: id });
+      return res;
+    } catch (error) {
+      return error;
+    }
+  },
 };

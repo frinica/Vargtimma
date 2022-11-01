@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import IBlacklist from "../models/BlacklistModel";
 import IReportedUser from "../models/ReportModel";
 import { getDB } from "./MongoDB";
 
@@ -49,8 +50,11 @@ export const ReportedUserDB = {
   // Delete report
   async deleteReport(id: ObjectId) {
     const collection = await getCollection();
-    const res = await collection.deleteOne({ _id: id });
-
-    return res;
+    try {
+      const res = await collection.deleteOne({ _id: id });
+      return res;
+    } catch (error) {
+      return error;
+    }
   },
 };
