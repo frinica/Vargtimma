@@ -1,13 +1,25 @@
 import { FC } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Figure } from "react-bootstrap";
 const LandingPage: FC = () => {
   return (
     <div>
       <div className="wrapper mx-auto mt-5">
-        <div>
-          <img />
-        </div>
-        <h1 className="mt-4 mb-5">VARGTIMMA</h1>
+        {/* <div>
+          <img
+            src="img/lantern-logo.png"
+            alt="lantern with a burning candle inside"
+            className="mt-3"
+          />
+        </div> */}
+        <Figure>
+          <Figure.Image
+            alt="lantern with a burning candle inside"
+            src="img/lantern-logo.png"
+            className="mt-3 logo"
+          />
+        </Figure>
+        <h1 className="mb-5 fw-bold">VARGTIMMA</h1>
+
         <div className="d-grid gap-3 col-6 mx-auto">
           <Button href="/login" variant="custom" size="lg">
             Logga in

@@ -7,7 +7,6 @@ import LandingPage from "./pages/LandingPage";
 import Navigation from "./components/Navigation";
 import LoginPage from "./pages/users/Login";
 import RegisterPage from "./pages/users/Register";
-import SearchPage from "./components/Search";
 import AdminPage from "./pages/admin/AdminBoard";
 
 const App = () => {
@@ -16,16 +15,6 @@ const App = () => {
   return (
     <div className="App">
       <Router>
-        {/* <header>
-          {path === "/" ||
-          path === "/registrera" ||
-          path === "/login" ? null : (
-            <h1>
-              <Link to="/start">VARGTIMMA</Link>
-            </h1>
-          )}
-        </header> */}
-
         {path !== "/" && path !== "/registrera" && path !== "/login" ? (
           <div>
             <Navigation />
