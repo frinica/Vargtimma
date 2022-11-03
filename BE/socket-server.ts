@@ -56,13 +56,16 @@ io.on("connection", (socket: any) => {
     "join",
     ({ username, room }: { username: string; room: string }, callBack: any) => {
       const { user, error } = addUser({ id: socket.id, username, room });
-      if (error) return callBack("From callback: ", error);
-      socket.join(user.room, (error: any) => {
-        if (error) {
-          console.log("Error when joining: ", error);
-          return;
-        }
-      });
+      if (error) {
+        console.log(error);
+      } else {
+        socket.join(user.room, (error: any) => {
+          if (error) {
+            console.log("Error when joining: ", error);
+            return;
+          }
+        });
+      }
       /* socket.emit("message", {
         user: "Admin",
         text: "Välkommen till chatten.",
