@@ -114,7 +114,7 @@ const AdminPage: FC = () => {
             <div>
               <ListGroup as="ol">
                 {reports.length !== 0 ? (
-                  reports.map((report, i) => {
+                  reports.map((report: any, i: number) => {
                     return (
                       <ListGroup.Item
                         as="li"

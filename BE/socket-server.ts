@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import express from "express";
-import http from "http";
+import { createServer } from "http";
 
 interface ServerToClientEvents {
   // Broadcasting events
@@ -28,7 +28,7 @@ interface SocketData {
 }
 
 const app = express();
-const server = http.createServer(app);
+const server = createServer(app);
 const { addUser, removeUser } = require("./socket/user");
 
 /* const io = new Server<
@@ -42,7 +42,7 @@ const { addUser, removeUser } = require("./socket/user");
   },
 }); */
 const options = process.env.REQUEST_URL;
-const io = require("socket.io")(server, {
+const io = new Server(server, {
   cors: {
     /* origin: "https://vargtimma.netlify.app", */
     origin: options,
@@ -56,13 +56,16 @@ io.on("connection", (socket: any) => {
     "join",
     ({ username, room }: { username: string; room: string }, callBack: any) => {
       const { user, error } = addUser({ id: socket.id, username, room });
-      if (error) return callBack("From callback: ", error);
-      socket.join(user.room, (error: any) => {
-        if (error) {
-          console.log("Error when joining: ", error);
-          return;
-        }
-      });
+      if (error) {
+        console.log(error);
+      } else {
+        socket.join(user.room, (error: any) => {
+          if (error) {
+            console.log("Error when joining: ", error);
+            return;
+          }
+        });
+      }
       /* socket.emit("message", {
         user: "Admin",
         text: "Välkommen till chatten.",
