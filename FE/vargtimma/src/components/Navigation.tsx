@@ -40,7 +40,7 @@ const Navigation: FC = () => {
                 <Link to="/start">Hem</Link>
               </li>
               <li className="list-group-item py-2 ripple bgList">
-                <Link to="/kontakter">Kontakter</Link>
+                <Link to="/kontakter">Sök användare</Link>
               </li>
               <li className="list-group-item py-2 ripple bgList">
                 <Link to={`/community?username=${user.alias}&room=chat`}>
