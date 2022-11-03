@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import LoginPage from "./pages/users/Login";
 import RegisterPage from "./pages/users/Register";
 import AdminPage from "./pages/admin/AdminBoard";
+import ModeratorPage from "./pages/admin/ModeratorBoard";
 
 const App = () => {
   const path = window.location.pathname;
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/start" element={<HomePage />} />
             <Route path="/community" element={<CommunityChat />} />
             <Route path="/adminboard" element={<AdminPage />} />
+            <Route path="/moderatorboard" element={<ModeratorPage />} />
           </Routes>
         </main>
       </Router>
