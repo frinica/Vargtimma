@@ -1,4 +1,6 @@
 import express from "express";
+import { ObjectId } from "mongodb";
+import { BlacklistDB } from "../database/BlacklistDB";
 import { UserDB } from "../database/UsersDB";
 import { authUser } from "../middlewares";
 import IUser from "../models/UserModel";
@@ -17,8 +19,12 @@ router.post("/register", async (req, res) => {
 
   try {
     const existingUser = await UserDB.getExistingUser(alias, email);
-    if (existingUser) {
-      res.sendStatus(400);
+    const blacklistUser = await BlacklistDB.getBlacklistedCredentials({
+      phone,
+      email,
+    });
+    if (existingUser || blacklistUser) {
+      res.status(400).send("User already exist or has been blocked");
     } else {
       const hashedPassword = hashPassword(password);
       const user: IUser = {
@@ -94,14 +100,28 @@ router.post("/search", authUser, async (req, res) => {
       let userArray: searchResult[] = [];
       users.forEach((u) => {
         const user = {
+          id: u._id!,
           alias: u.alias!,
           phone: u.phone!,
+          email: u.email!,
         };
         userArray.push(user);
       });
-      console.log(userArray);
       res.status(200).send(userArray);
     }
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+// Fetch one user
+router.get("/:id", authUser, async (req, res) => {
+  try {
+    const id = new ObjectId(req.params.id);
+    const { hashedPassword, ...resUser } = await UserDB.getOneUser(id);
+    const user = resUser;
+
+    res.status(200).send(user);
   } catch (error) {
     res.status(400).send(error);
   }
@@ -118,6 +138,18 @@ router.put("/update", authUser, async (req, res) => {
   } catch (error) {
     res.sendStatus(400);
     console.log(error);
+  }
+});
+
+// Delete user
+router.delete("/:id", authUser, async (req, res) => {
+  try {
+    const id = new ObjectId(req.params.id);
+
+    await UserDB.deleteUser(id);
+    res.sendStatus(200);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
