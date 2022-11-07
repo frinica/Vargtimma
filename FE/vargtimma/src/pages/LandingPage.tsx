@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Button, Figure } from "react-bootstrap";
+import { propTypes } from "react-bootstrap/esm/Image";
 const LandingPage: FC = () => {
   return (
     <div>

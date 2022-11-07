@@ -40,14 +40,14 @@ const Navigation: FC = () => {
                 <Link to="/start">Hem</Link>
               </li>
               <li className="list-group-item py-2 ripple bgList">
-                <Link to="/kontakter">Sök användare</Link>
+                <Link to="/sok">Sök användare</Link>
               </li>
               <li className="list-group-item py-2 ripple bgList">
                 <Link to={`/community?username=${user.alias}&room=chat`}>
                   Community
                 </Link>
               </li>
-              {/* {user.role === "2" ? (
+              {user.role === "2" ? (
                 <li className="list-group-item py-2 ripple bgList">
                   <Link to="/adminboard" className="">
                     Admin-board
@@ -60,7 +60,7 @@ const Navigation: FC = () => {
                     Moderator-board
                   </Link>
                 </li>
-              ) : null} */}
+              ) : null}
             </ul>
           </div>
           <div>
