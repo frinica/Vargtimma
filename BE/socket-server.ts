@@ -28,7 +28,7 @@ interface SocketData {
 }
 
 const app = express();
-const server = createServer(app);
+const server = require("http").createServer(app);
 const { addUser, removeUser } = require("./socket/user");
 
 /* const io = new Server<
