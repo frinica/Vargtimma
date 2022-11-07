@@ -20,6 +20,12 @@ const CommunityChat: FC = () => {
       console.log("Connected to socket");
       if (error) alert(error);
     });
+
+    return () => {
+      if (socket.readyState === 1) {
+        socket.close();
+      }
+    };
   }, []);
 
   // Re-render on new messages
