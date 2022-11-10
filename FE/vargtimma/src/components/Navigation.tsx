@@ -17,6 +17,7 @@ const Navigation: FC = () => {
   const getUser = async () => {
     const currentUser = await userData();
     setUser(currentUser);
+    console.log("cl1: ", user);
   };
 
   const handleLogout = () => {
@@ -28,6 +29,8 @@ const Navigation: FC = () => {
   useEffect(() => {
     getUser();
   }, []);
+
+  console.log("cl2: ", user);
 
   return (
     <header>
