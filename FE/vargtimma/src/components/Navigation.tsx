@@ -17,7 +17,6 @@ const Navigation: FC = () => {
   const getUser = async () => {
     const currentUser = await userData();
     setUser(currentUser);
-    console.log("cl1: ", user);
   };
 
   const handleLogout = () => {
@@ -29,8 +28,6 @@ const Navigation: FC = () => {
   useEffect(() => {
     getUser();
   }, []);
-
-  console.log("cl2: ", user);
 
   return (
     <header>
@@ -50,14 +47,14 @@ const Navigation: FC = () => {
                   Community
                 </Link>
               </li>
-              {user.role === "2" ? (
+              {user.role === "2" || user.role === 2 ? (
                 <li className="list-group-item py-2 ripple bgList">
                   <Link to="/adminboard" className="">
                     Admin-board
                   </Link>
                 </li>
               ) : null}
-              {user.role === "1" ? (
+              {user.role === "1" || user.role === 1 ? (
                 <li className="list-group-item py-2 ripple bgList">
                   <Link to="/moderatorboard" className="">
                     Moderator-board
