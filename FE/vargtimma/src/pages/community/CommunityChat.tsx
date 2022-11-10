@@ -14,8 +14,7 @@ const CommunityChat: FC = () => {
 
   // Connect user to the socket
   useEffect(() => {
-    console.log("user: ", username, "api: ", ENDPOINT);
-    socket = io(ENDPOINT, { transports: ["websocket"] });
+    socket = io(ENDPOINT);
 
     socket.emit("join", { username, room }, (error: any) => {
       console.log("Connected to socket");
