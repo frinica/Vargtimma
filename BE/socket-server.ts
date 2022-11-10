@@ -1,3 +1,4 @@
+require("dotenv").config();
 import { Server } from "socket.io";
 import express from "express";
 import { createServer } from "http";
@@ -49,7 +50,7 @@ const io = new Server(server, {
   },
 });
 
-const PORT = process.env.SOCKET_PORT || 5000;
+const PORT = Number(process.env.SOCKET_PORT) || 5000;
 
 io.on("connection", (socket: any) => {
   socket.once(
