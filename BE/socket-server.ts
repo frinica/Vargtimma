@@ -93,5 +93,5 @@ io.on("connection", (socket: any) => {
 });
 
 server.listen(PORT, () =>
-  console.log(`Socket-server is running on port ${PORT}`)
+  console.log(`Socket-server is running on ${server}:${PORT}`)
 );
