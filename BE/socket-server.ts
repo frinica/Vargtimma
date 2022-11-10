@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 import express from "express";
 import { createServer } from "http";
 
-interface ServerToClientEvents {
+/* interface ServerToClientEvents {
   // Broadcasting events
   noArg: () => void;
   basicEmit: (a: number, b: string, c: Buffer) => void;
@@ -26,26 +26,21 @@ interface SocketData {
   // Type socket.data attribute
   name: string;
   age: number;
-}
+} */
 
 const app = express();
-const server = createServer(app);
+/* const server = createServer(app); */
+const http = require("http").createServer(app);
 const { addUser, removeUser } = require("./socket/user");
 
-/* const io = new Server<
-  ServerToClientEvents,
-  ClientToServerEvents,
-  InterServerEvents,
-  SocketData
->(server, {
+const options = process.env.REQUEST_URL;
+/* const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: options,
   },
 }); */
-const options = process.env.REQUEST_URL;
-const io = new Server(server, {
+const io = require("socket.io")(http, {
   cors: {
-    /* origin: "https://vargtimma.netlify.app", */
     origin: options,
   },
 });
@@ -92,6 +87,4 @@ io.on("connection", (socket: any) => {
   });
 });
 
-server.listen(PORT, () =>
-  console.log(`Socket-server is running on ${server}:${PORT}`)
-);
+http.listen(PORT, () => console.log(`Socket-server is running on ${PORT}`));
