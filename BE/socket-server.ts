@@ -41,7 +41,7 @@ const options = process.env.REQUEST_URL;
 }); */
 const io = require("socket.io")(http, {
   cors: {
-    origin: options,
+    origin: "*",
   },
 });
 
