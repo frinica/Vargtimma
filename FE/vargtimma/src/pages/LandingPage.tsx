@@ -1,7 +1,33 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button, Figure } from "react-bootstrap";
-import { propTypes } from "react-bootstrap/esm/Image";
+import { useNavigate } from "react-router-dom";
+import { checkIsLoggedIn, logout } from "../services/auth.service";
+
 const LandingPage: FC = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const checkLoggedIn = async () => {
+    const loggedIn = checkIsLoggedIn();
+
+    if (loggedIn) {
+      navigate("/start");
+    } else {
+      logout();
+      navigate("/");
+      window.location.reload();
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+
+    if (loading) {
+      checkLoggedIn();
+    }
+  }, []);
+
   return (
     <div>
       <div className="wrapper mx-auto mt-5">

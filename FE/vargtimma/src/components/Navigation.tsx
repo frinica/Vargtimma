@@ -1,7 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useRef } from "react";
 import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { logout, userData } from "../services/auth.service";
+import alarmSfx from "../audio/psycho-sound-11797.mp3";
 
 const Navigation: FC = () => {
   const initValues = {
@@ -13,6 +14,8 @@ const Navigation: FC = () => {
   };
   const navigate = useNavigate();
   const [user, setUser] = useState(initValues);
+  const alarm = useRef(new Audio(alarmSfx));
+  const [alarmActive, setAlarmActive] = useState(false);
 
   const getUser = async () => {
     const currentUser = await userData();
@@ -23,6 +26,15 @@ const Navigation: FC = () => {
     logout();
     navigate("/");
     window.location.reload();
+  };
+
+  const playAlarm = () => {
+    setAlarmActive(!alarmActive);
+    if (alarmActive) {
+      alarm.current.pause();
+    } else {
+      alarm.current.play();
+    }
   };
 
   useEffect(() => {
@@ -68,7 +80,9 @@ const Navigation: FC = () => {
               <li className="list-group-item py-2 ripple bgList">
                 <a href="tel:">112</a>
               </li>
-              <li className="list-group-item py-2 ripple bgList">Larm</li>
+              <li className="list-group-item py-2 ripple bgList">
+                <button onClick={playAlarm}>Larm</button>
+              </li>
             </ul>
           </div>
         </div>

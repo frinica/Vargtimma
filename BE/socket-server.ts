@@ -34,12 +34,14 @@ const http = require("http").createServer(app);
 const { addUser, removeUser } = require("./socket/user");
 
 const options = process.env.REQUEST_URL;
+const customPath = process.env.CUSTOM_PATH;
 /* const io = new Server(server, {
   cors: {
     origin: options,
   },
 }); */
 const io = require("socket.io")(http, {
+  path: customPath,
   cors: {
     origin: "*",
   },

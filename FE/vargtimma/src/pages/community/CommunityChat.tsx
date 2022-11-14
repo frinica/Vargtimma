@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import io from "socket.io-client";
 const ENDPOINT = process.env.REACT_APP_SOCKET_URL || "";
+const PATH = process.env.REACT_APP_CUSTOM_PATH || "";
 let socket: any;
 const initMessages = [{ user: "", text: "" }];
 
@@ -14,7 +15,8 @@ const CommunityChat: FC = () => {
 
   // Connect user to the socket
   useEffect(() => {
-    socket = io(ENDPOINT, { transports: ["websocket"] });
+    socket = io(ENDPOINT, { path: PATH, transports: ["websocket"] });
+    console.log(socket);
 
     socket.emit("join", { username, room }, (error: any) => {
       console.log("Connected to socket");
