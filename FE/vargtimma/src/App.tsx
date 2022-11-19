@@ -32,8 +32,7 @@ const App = () => {
     <div className="App">
       <Router>
         {loggedIn && <Navigation />}
-
-        <main className="appContent">
+        <main className="mx-5">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/registrera" element={<RegisterPage />} />

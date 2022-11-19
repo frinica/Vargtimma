@@ -41,7 +41,6 @@ const customPath = process.env.CUSTOM_PATH;
   },
 }); */
 const io = require("socket.io")(http, {
-  path: customPath,
   cors: {
     origin: "*",
   },

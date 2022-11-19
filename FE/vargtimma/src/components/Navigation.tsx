@@ -16,6 +16,7 @@ const Navigation: FC = () => {
   const [user, setUser] = useState(initValues);
   const alarm = useRef(new Audio(alarmSfx));
   const [alarmActive, setAlarmActive] = useState(false);
+  const [openNav, setOpenNav] = useState(false);
 
   const getUser = async () => {
     const currentUser = await userData();
@@ -37,74 +38,63 @@ const Navigation: FC = () => {
     }
   };
 
+  const toggleNav = () => {
+    setOpenNav(!openNav);
+  };
+
   useEffect(() => {
     getUser();
   }, []);
 
   return (
-    <header>
-      {/* Sidebar navigation */}
-      <nav className="collapse d-lg-block sidebar collapse">
-        <div className="position-sticky">
-          <div>
-            <ul className="list-group mx-3 mt-4">
-              <li className="list-group-item py-2 ripple bgList">
-                <Link to="/start">Hem</Link>
+    <header className="d-flex m-3">
+      <nav className={openNav ? "overlay w-100" : "overlay w-0"}>
+        <a className="closebtn" onClick={toggleNav}>
+          &times;
+        </a>
+        <div className="overlay-content d-flex flex-column">
+          <ul className="list-group">
+            <li>
+              <Link to="/start">Hem</Link>
+            </li>
+            <li>
+              <Link to="/sok">Sök användare</Link>
+            </li>
+            <li>
+              <Link to={`/community?username=${user.alias}&room=chat`}>
+                Community
+              </Link>
+            </li>
+            {user.role === "2" || user.role === 2 ? (
+              <li>
+                <Link to="/adminboard">Admin-board</Link>
               </li>
-              <li className="list-group-item py-2 ripple bgList">
-                <Link to="/sok">Sök användare</Link>
+            ) : null}
+            {user.role === "1" || user.role === 1 ? (
+              <li>
+                <Link to="/moderatorboard">Moderator-board</Link>
               </li>
-              <li className="list-group-item py-2 ripple bgList">
-                <Link to={`/community?username=${user.alias}&room=chat`}>
-                  Community
-                </Link>
-              </li>
-              {user.role === "2" || user.role === 2 ? (
-                <li className="list-group-item py-2 ripple bgList">
-                  <Link to="/adminboard" className="">
-                    Admin-board
-                  </Link>
-                </li>
-              ) : null}
-              {user.role === "1" || user.role === 1 ? (
-                <li className="list-group-item py-2 ripple bgList">
-                  <Link to="/moderatorboard" className="">
-                    Moderator-board
-                  </Link>
-                </li>
-              ) : null}
-            </ul>
-          </div>
-          <div>
-            <ul className="list-group list-group-flush mx-3 mt-4">
-              <li className="list-group-item py-2 ripple bgList">
-                <a href="tel:">112</a>
-              </li>
-              <li className="list-group-item py-2 ripple bgList">
-                <button onClick={playAlarm}>Larm</button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-      {/* Topbar navigation */}
-      <nav className="navbar navbar-expand-lg navbar-dark fixed-top customNav">
-        <div className="container-fluid">
-          <Link to="">
-            <img></img>
-          </Link>
-
-          {/* Right side link */}
-          <ul className="list-group-flush mx-2 mt-3">
-            <li className="list-group-item">
-              <Button variant="custom" size="sm" onClick={handleLogout}>
+            ) : null}
+            <li>
+              <Link to="tel:">112</Link>
+            </li>
+            <li>
+              <Link to="#" onClick={playAlarm}>
+                Larm
+              </Link>
+            </li>
+            <li>
+              <Link to="#" onClick={handleLogout}>
                 Logga ut
-              </Button>
+              </Link>
             </li>
           </ul>
         </div>
       </nav>
+
+      <span className="h1 menubtn" onClick={toggleNav}>
+        &#9776;
+      </span>
     </header>
   );
 };

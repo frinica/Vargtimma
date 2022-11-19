@@ -16,14 +16,11 @@ body {
   height: 100vh;
 }
 
-.appContent {
-  margin: 6rem 5rem 2rem 20rem;
-  padding: 1rem;
-}
-
 h1 {
   font-size: 3.2rem;
-  background-color: #f3ec78;
+}
+
+.brand {
   background-image: linear-gradient(to top, #202950, #3c396a, #5b4a83, #7c5a9b);
   background-size: 100%;
   -webkit-background-clip: text;
@@ -59,49 +56,61 @@ h1 {
 }
 
 /* Navigation */
-.sidebar {
-  background-image: linear-gradient(
-    to right bottom,
-    #051937,
-    #192345,
-    #2c2d53,
-    #3e3761,
-    #52416f
-  );
+.menubtn:hover {
+  cursor: pointer;
+}
+
+.overlay {
+  height: 100%;
+  width: 0;
   position: fixed;
+  z-index: 1;
   top: 0;
-  bottom: 0;
   left: 0;
-  padding: 58px 0 0;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
-    rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  width: 240px;
-  z-index: 600;
-}
-
-@media (max-width: 991.98px) {
-  .sidebar {
-    width: 100%;
-  }
-}
-
-.sidebar .active {
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-}
-
-.sidebar-sticky {
-  position: relative;
-  top: 0;
-  height: calc(100vh - 48px);
-  padding-top: 0.5rem;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
   overflow-x: hidden;
-  overflow-y: auto;
+  transition: 0.5s;
 }
 
-.bgList {
-  background: transparent;
-  border: none;
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover,
+.overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {
+    font-size: 20px;
+  }
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
 }
 
 /* User cards */

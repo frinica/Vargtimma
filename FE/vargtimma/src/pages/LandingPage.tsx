@@ -41,11 +41,11 @@ const LandingPage: FC = () => {
         <Figure>
           <Figure.Image
             alt="lantern with a burning candle inside"
-            src="img/lantern-logo.png"
+            src="assets/img/lantern-logo.png"
             className="mt-3 logo"
           />
         </Figure>
-        <h1 className="mb-5 fw-bold">VARGTIMMA</h1>
+        <h1 className="mb-5 fw-bold brand">VARGTIMMA</h1>
 
         <div className="d-grid gap-3 col-6 mx-auto">
           <Button href="/login" variant="custom" size="lg">
