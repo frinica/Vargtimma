@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import {
-  Badge,
   Button,
   ButtonGroup,
   Collapse,
+  Form,
   ListGroup,
   ToggleButton,
 } from "react-bootstrap";
@@ -32,6 +32,7 @@ const AdminPage: FC = () => {
   const [users, setUsers] = useState([initValues]);
   const [reports, setReports] = useState<any[]>([]);
   const [updateUser, setUpdateUser] = useState(false);
+  const [index, setIndex] = useState<number | null>(null);
   const [radioValue, setRadioValue] = useState(5);
 
   const radios = [
@@ -96,7 +97,7 @@ const AdminPage: FC = () => {
   return (
     <div className="d-flex flex-column">
       <h2>Hej {user.alias}!</h2>
-      <div className="">
+      <div>
         <div className="flex-column p-3">
           <Button
             variant="custom"
@@ -136,7 +137,7 @@ const AdminPage: FC = () => {
                           <Button
                             variant="danger"
                             size="sm"
-                            className="mx-1"
+                            className="rounded-pill mx-2"
                             onClick={() => {
                               blockingUser({
                                 userID: report.userData[0]._id,
@@ -148,9 +149,13 @@ const AdminPage: FC = () => {
                           >
                             Blockera
                           </Button>
-                          <Badge bg="danger" pill>
+                          <Button
+                            variant="warning"
+                            size="sm"
+                            className="rounded-pill"
+                          >
                             Ta bort
-                          </Badge>
+                          </Button>
                         </div>
                       </ListGroup.Item>
                     );
@@ -179,65 +184,96 @@ const AdminPage: FC = () => {
           <Collapse className="mt-3" in={active === 2}>
             <div>
               <ListGroup as="ol">
-                {users.map((u) => {
+                {users.map((u, i) => {
                   return (
                     <ListGroup.Item
                       as="li"
                       variant="dark"
-                      className="d-flex justify-content-between align-items-start"
+                      className="d-flex align-items-start overflow-scroll"
                       key={u.userID}
                     >
-                      <div className="ms-2 me-auto">
-                        <div className="fw-bold">{u.alias}</div>
-                        {u.email}
+                      <div className="text-start me-5">
+                        <p className="fw-bold  mb-0">{u.alias}</p>
+                        <p className="mb-0">{u.email}</p>
                       </div>
-                      <Badge
-                        bg="success"
-                        pill
-                        onClick={() => setUpdateUser(true)}
-                      >
-                        Uppdatera
-                      </Badge>
-
-                      <Badge bg="danger" pill>
-                        Blockera
-                      </Badge>
-                      {updateUser ? (
-                        <ButtonGroup className="mb-2">
-                          <Button
-                            variant="danger"
-                            size="sm"
-                            className="fw-bold"
-                            onClick={() => setUpdateUser(false)}
-                          >
-                            X
-                          </Button>
-                          {radios.map((radio, i) => (
-                            <ToggleButton
-                              key={i}
-                              id={`radio-${i}`}
-                              type="radio"
-                              variant="secondary"
-                              name="radio"
-                              value={radio.value}
-                              checked={radio.value === user.role}
-                              onChange={(e: any) => {
-                                setRadioValue(e.target.value);
-                              }}
-                            >
-                              {radio.name}
-                            </ToggleButton>
-                          ))}
+                      <div>
+                        <div className="d-flex">
                           <Button
                             variant="success"
                             size="sm"
-                            className="fw-bold"
-                            onClick={() => updateUserRole(u, radioValue)}
+                            className="rounded-pill me-2"
+                            onClick={() => {
+                              setUpdateUser(true);
+                              setIndex(i);
+                            }}
                           >
-                            Go
+                            Uppdatera
                           </Button>
-                        </ButtonGroup>
-                      ) : null}
+                          <Button
+                            variant="danger"
+                            size="sm"
+                            className="rounded-pill"
+                          >
+                            Blockera
+                          </Button>
+                        </div>
+
+                        {updateUser && index === i ? (
+                          <div className="text-start mt-2">
+                            <ButtonGroup className="mb-2">
+                              <Button
+                                variant="danger"
+                                size="sm"
+                                className="fw-bold"
+                                onClick={() => setUpdateUser(false)}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  fill="currentColor"
+                                  className="bi bi-x-lg"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                                </svg>
+                              </Button>
+                              <Form className="d-flex mx-2">
+                                {radios.map((radio, i) => (
+                                  <Form.Check
+                                    inline
+                                    key={i}
+                                    label={radio.name}
+                                    type="radio"
+                                    id={`radio-${i}`}
+                                    checked={radio.value == u.role}
+                                    onChange={(e: any) => {
+                                      setRadioValue(e.target.value);
+                                    }}
+                                  />
+                                ))}
+                                <Button
+                                  variant="success"
+                                  size="sm"
+                                  className="fw-bold"
+                                  onClick={() => updateUserRole(u, radioValue)}
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    fill="currentColor"
+                                    className="bi bi-check-lg"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                                  </svg>
+                                </Button>
+                              </Form>
+                            </ButtonGroup>
+                          </div>
+                        ) : null}
+                      </div>
                     </ListGroup.Item>
                   );
                 })}

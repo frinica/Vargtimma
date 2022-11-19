@@ -40,26 +40,6 @@ const ModeratorPage: FC = () => {
     { name: "Administratör", value: 2 },
   ];
 
-  const updateUserRole = async (u: UpdatingUser, radioValue: number) => {
-    const { alias, phone, email } = u;
-    const user = {
-      alias,
-      phone,
-      email,
-      role: radioValue,
-    };
-    const success = await update(user);
-    try {
-      if (success) {
-        alert("Användarens roll har uppdaterats");
-      } else {
-        alert("Användaren kunde inte uppdateras");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const blockingUser = async (blockData: any) => {
     const success = await blockUser(blockData);
 
@@ -148,9 +128,13 @@ const ModeratorPage: FC = () => {
                           >
                             Blockera
                           </Button>
-                          <Badge bg="danger" pill>
+                          <Button
+                            variant="warning"
+                            size="sm"
+                            className="rounded-pill"
+                          >
                             Ta bort
-                          </Badge>
+                          </Button>
                         </div>
                       </ListGroup.Item>
                     );
