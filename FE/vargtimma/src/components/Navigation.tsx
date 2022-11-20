@@ -76,7 +76,13 @@ const Navigation: FC = () => {
               </li>
             ) : null}
             <li>
-              <Link to="tel:" className="mt-5">
+              <Link
+                to="#"
+                className="mt-5"
+                onClick={() => {
+                  alert("Nödnummer har inte lagts till");
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
