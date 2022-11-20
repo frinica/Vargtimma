@@ -48,3 +48,15 @@ export const blockUser = async (blockData: IBlacklist) => {
     return 400;
   }
 };
+
+// Remove a report
+export const deleteReport = async (id: string) => {
+  const headers = { headers: getAuthHeader() };
+  const res = await axios.delete(API_URL_REPORT + id, headers);
+
+  if (res.status === 200) {
+    return 200;
+  } else {
+    return 400;
+  }
+};

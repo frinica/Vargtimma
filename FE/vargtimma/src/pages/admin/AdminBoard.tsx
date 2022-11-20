@@ -10,7 +10,11 @@ import {
 import Search from "../../components/Search";
 import { IBlacklist, IReport } from "../../models/Report";
 import { userData } from "../../services/auth.service";
-import { blockUser, fetchReports } from "../../services/report.service";
+import {
+  blockUser,
+  deleteReport,
+  fetchReports,
+} from "../../services/report.service";
 import { fetchUsers, update } from "../../services/user.service";
 
 interface UpdatingUser {
@@ -72,6 +76,17 @@ const AdminPage: FC = () => {
     }
   };
 
+  const removeReport = async (id: string) => {
+    const success = await deleteReport(id);
+
+    if (success === 200) {
+      alert("Rapporten har tagits bort");
+      window.location.reload();
+    } else {
+      alert("Ett fel uppstod");
+    }
+  };
+
   useEffect(() => {
     const getUser = async () => {
       const currentUser = await userData();
@@ -112,7 +127,7 @@ const AdminPage: FC = () => {
             Rapporterade användare
           </Button>
           <Collapse className="mt-3" in={active === 1}>
-            <div>
+            <div className="text-start mt-2">
               <ListGroup as="ol">
                 {reports.length !== 0 ? (
                   reports.map((report: any, i: number) => {
@@ -120,7 +135,7 @@ const AdminPage: FC = () => {
                       <ListGroup.Item
                         as="li"
                         variant="dark"
-                        className="d-flex justify-content-between align-items-start"
+                        className="d-flex align-items-start overflow-scroll"
                         key={i}
                       >
                         <div className="ms-2 me-auto">
@@ -129,39 +144,44 @@ const AdminPage: FC = () => {
                           </div>
                           <p>Rapporterad av: {report.reporterData[0].alias}</p>
                         </div>
-                        <div>
+                        <div className="mx-5">
                           <p>Anledning:</p>
                           <p>{report.reason}</p>
                         </div>
                         <div className="d-flex">
-                          <Button
-                            variant="danger"
-                            size="sm"
-                            className="rounded-pill mx-2"
-                            onClick={() => {
-                              blockingUser({
-                                userID: report.userData[0]._id,
-                                phone: report.userData[0].phone,
-                                email: report.userData[0].email,
-                                reportID: report._id,
-                              });
-                            }}
-                          >
-                            Blockera
-                          </Button>
-                          <Button
-                            variant="warning"
-                            size="sm"
-                            className="rounded-pill"
-                          >
-                            Ta bort
-                          </Button>
+                          <ButtonGroup className="mb-2">
+                            <Button
+                              variant="danger"
+                              size="sm"
+                              className="rounded-pill mx-2"
+                              onClick={() => {
+                                blockingUser({
+                                  userID: report.userData[0]._id,
+                                  phone: report.userData[0].phone,
+                                  email: report.userData[0].email,
+                                  reportID: report._id,
+                                });
+                              }}
+                            >
+                              Blockera
+                            </Button>
+                            <Button
+                              variant="warning"
+                              size="sm"
+                              className="rounded-pill"
+                              onClick={() => {
+                                removeReport(report._id);
+                              }}
+                            >
+                              Radera
+                            </Button>
+                          </ButtonGroup>
                         </div>
                       </ListGroup.Item>
                     );
                   })
                 ) : (
-                  <p>🌟Inga rapporter🌟</p>
+                  <p className="text-center">🌟Inga rapporter🌟</p>
                 )}
               </ListGroup>
             </div>
@@ -198,24 +218,26 @@ const AdminPage: FC = () => {
                       </div>
                       <div>
                         <div className="d-flex">
-                          <Button
-                            variant="success"
-                            size="sm"
-                            className="rounded-pill me-2"
-                            onClick={() => {
-                              setUpdateUser(true);
-                              setIndex(i);
-                            }}
-                          >
-                            Uppdatera
-                          </Button>
-                          <Button
-                            variant="danger"
-                            size="sm"
-                            className="rounded-pill"
-                          >
-                            Blockera
-                          </Button>
+                          <ButtonGroup className="mb-2">
+                            <Button
+                              variant="success"
+                              size="sm"
+                              className="rounded-pill me-2"
+                              onClick={() => {
+                                setUpdateUser(true);
+                                setIndex(i);
+                              }}
+                            >
+                              Uppdatera
+                            </Button>
+                            <Button
+                              variant="danger"
+                              size="sm"
+                              className="rounded-pill"
+                            >
+                              Blockera
+                            </Button>
+                          </ButtonGroup>
                         </div>
 
                         {updateUser && index === i ? (
@@ -231,7 +253,7 @@ const AdminPage: FC = () => {
                                   xmlns="http://www.w3.org/2000/svg"
                                   width="16"
                                   height="16"
-                                  fill="currentColor"
+                                  fillRule="inherit"
                                   className="bi bi-x-lg"
                                   viewBox="0 0 16 16"
                                 >
@@ -262,7 +284,7 @@ const AdminPage: FC = () => {
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="20"
                                     height="20"
-                                    fill="currentColor"
+                                    fillRule="inherit"
                                     className="bi bi-check-lg"
                                     viewBox="0 0 16 16"
                                   >

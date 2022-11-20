@@ -10,7 +10,11 @@ import {
 import Search from "../../components/Search";
 import { IBlacklist, IReport } from "../../models/Report";
 import { userData } from "../../services/auth.service";
-import { blockUser, fetchReports } from "../../services/report.service";
+import {
+  blockUser,
+  deleteReport,
+  fetchReports,
+} from "../../services/report.service";
 import { fetchUsers, update } from "../../services/user.service";
 
 interface UpdatingUser {
@@ -48,6 +52,17 @@ const ModeratorPage: FC = () => {
       window.location.reload();
     } else {
       alert("Användaren kunde inte blockeras");
+    }
+  };
+
+  const removeReport = async (id: string) => {
+    const success = await deleteReport(id);
+
+    if (success === 200) {
+      alert("Rapporten har tagits bort");
+      window.location.reload();
+    } else {
+      alert("Ett fel uppstod");
     }
   };
 
@@ -113,28 +128,33 @@ const ModeratorPage: FC = () => {
                           <p>{report.reason}</p>
                         </div>
                         <div className="d-flex">
-                          <Button
-                            variant="danger"
-                            size="sm"
-                            className="mx-1"
-                            onClick={() => {
-                              blockingUser({
-                                userID: report.userData[0]._id,
-                                phone: report.userData[0].phone,
-                                email: report.userData[0].email,
-                                reportID: report._id,
-                              });
-                            }}
-                          >
-                            Blockera
-                          </Button>
-                          <Button
-                            variant="warning"
-                            size="sm"
-                            className="rounded-pill"
-                          >
-                            Ta bort
-                          </Button>
+                          <ButtonGroup className="mb-2">
+                            <Button
+                              variant="danger"
+                              size="sm"
+                              className="rounded-pill mx-2"
+                              onClick={() => {
+                                blockingUser({
+                                  userID: report.userData[0]._id,
+                                  phone: report.userData[0].phone,
+                                  email: report.userData[0].email,
+                                  reportID: report._id,
+                                });
+                              }}
+                            >
+                              Blockera
+                            </Button>
+                            <Button
+                              variant="warning"
+                              size="sm"
+                              className="rounded-pill"
+                              onClick={() => {
+                                removeReport(report._id);
+                              }}
+                            >
+                              Radera
+                            </Button>
+                          </ButtonGroup>
                         </div>
                       </ListGroup.Item>
                     );
