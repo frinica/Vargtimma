@@ -55,150 +55,137 @@ const RegisterPage: FC = () => {
         const { errors, touched, isValid, dirty } = formik;
 
         return (
-          <div>
-            <div className="wrapper m-3 p-3 mx-auto">
-              <h2 className="mb-4">Registrera ny användare</h2>
-              <Form>
-                <div className="mb-3">
-                  <label htmlFor="firstName" className="form-label">
-                    Förnamn
-                  </label>
-                  <Field
-                    type="text"
-                    name="firstName"
-                    className={
-                      errors.firstName && touched.firstName
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  />
-                  <ErrorMessage
-                    name="firstName"
-                    component="span"
-                    className="error"
-                  />
-                </div>
+          <div className="wrapper p-3 mx-auto my-3">
+            <h2 className="mb-4">Registrera ny användare</h2>
+            <Form>
+              <div className="mb-3">
+                <label htmlFor="firstName" className="form-label">
+                  Förnamn
+                </label>
+                <Field
+                  type="text"
+                  name="firstName"
+                  className={
+                    errors.firstName && touched.firstName
+                      ? "input-error form-control"
+                      : "form-control"
+                  }
+                />
+                <ErrorMessage
+                  name="firstName"
+                  component="span"
+                  className="error"
+                />
+              </div>
 
-                <div className="mb-3">
-                  <label htmlFor="lastName" className="form-label">
-                    Efternamn
-                  </label>
-                  <Field
-                    type="text"
-                    name="lastName"
-                    className={
-                      errors.lastName && touched.lastName
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  />
-                  <ErrorMessage
-                    name="lastName"
-                    component="span"
-                    className="error"
-                  />
-                </div>
+              <div className="mb-3">
+                <label htmlFor="lastName" className="form-label">
+                  Efternamn
+                </label>
+                <Field
+                  type="text"
+                  name="lastName"
+                  className={
+                    errors.lastName && touched.lastName
+                      ? "input-error form-control"
+                      : "form-control"
+                  }
+                />
+                <ErrorMessage
+                  name="lastName"
+                  component="span"
+                  className="error"
+                />
+              </div>
 
-                <div className="mb-3">
-                  <label htmlFor="alias" className="form-label">
-                    Alias
-                  </label>
-                  <Field
-                    type="text"
-                    name="alias"
-                    className={
-                      errors.alias && touched.alias
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  />
-                  <ErrorMessage
-                    name="alias"
-                    component="span"
-                    className="error"
-                  />
-                </div>
+              <div className="mb-3">
+                <label htmlFor="alias" className="form-label">
+                  Alias
+                </label>
+                <Field
+                  type="text"
+                  name="alias"
+                  className={
+                    errors.alias && touched.alias
+                      ? "input-error form-control"
+                      : "form-control"
+                  }
+                />
+                <ErrorMessage name="alias" component="span" className="error" />
+              </div>
 
-                <div className="mb-3">
-                  <label htmlFor="phone" className="form-label">
-                    Telefonnummer
-                  </label>
-                  <Field
-                    type="text"
-                    name="phone"
-                    className={
-                      errors.phone && touched.phone
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  />
-                  <ErrorMessage
-                    name="phone"
-                    component="span"
-                    className="error"
-                  />
-                </div>
+              <div className="mb-3">
+                <label htmlFor="phone" className="form-label">
+                  Telefonnummer
+                </label>
+                <Field
+                  type="text"
+                  name="phone"
+                  className={
+                    errors.phone && touched.phone
+                      ? "input-error form-control"
+                      : "form-control"
+                  }
+                />
+                <ErrorMessage name="phone" component="span" className="error" />
+              </div>
 
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email
-                  </label>
-                  <Field
-                    type="email"
-                    name="email"
-                    className={
-                      errors.email && touched.email
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  />
-                  <ErrorMessage
-                    name="email"
-                    component="span"
-                    className="error"
-                  />
-                </div>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
+                <Field
+                  type="email"
+                  name="email"
+                  className={
+                    errors.email && touched.email
+                      ? "input-error form-control"
+                      : "form-control"
+                  }
+                />
+                <ErrorMessage name="email" component="span" className="error" />
+              </div>
 
-                <div className="mb-3">
-                  <label htmlFor="password" className="form-label">
-                    Lösenord
-                  </label>
-                  <Field
-                    type="password"
-                    name="password"
-                    className={
-                      errors.password && touched.password
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="span"
-                    className="error"
-                  />
-                </div>
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label">
+                  Lösenord
+                </label>
+                <Field
+                  type="password"
+                  name="password"
+                  className={
+                    errors.password && touched.password
+                      ? "input-error form-control"
+                      : "form-control"
+                  }
+                />
+                <ErrorMessage
+                  name="password"
+                  component="span"
+                  className="error"
+                />
+              </div>
 
-                <div className="mb-3">
-                  <label htmlFor="confirmPass" className="form-label">
-                    Bekräfta lösenord
-                  </label>
-                  <Field
-                    type="password"
-                    name="confirmPass"
-                    className={
-                      errors.confirmPass && touched.confirmPass
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  />
-                  <ErrorMessage
-                    name="confirmPass"
-                    component="span"
-                    className="error"
-                  />
-                </div>
-
+              <div className="mb-3">
+                <label htmlFor="confirmPass" className="form-label">
+                  Bekräfta lösenord
+                </label>
+                <Field
+                  type="password"
+                  name="confirmPass"
+                  className={
+                    errors.confirmPass && touched.confirmPass
+                      ? "input-error form-control"
+                      : "form-control"
+                  }
+                />
+                <ErrorMessage
+                  name="confirmPass"
+                  component="span"
+                  className="error"
+                />
+              </div>
+              <div className="py-2">
                 <button
                   type="submit"
                   className={
@@ -210,8 +197,8 @@ const RegisterPage: FC = () => {
                 >
                   Registrera
                 </button>
-              </Form>
-            </div>
+              </div>
+            </Form>
           </div>
         );
       }}

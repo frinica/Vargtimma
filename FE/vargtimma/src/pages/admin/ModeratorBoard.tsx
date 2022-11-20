@@ -108,7 +108,7 @@ const ModeratorPage: FC = () => {
           <Collapse className="mt-3" in={active === 1}>
             <div>
               <ListGroup as="ol">
-                {reports.length !== 0 ? (
+                {reports.length > 0 ? (
                   reports.map((report, i) => {
                     return (
                       <ListGroup.Item

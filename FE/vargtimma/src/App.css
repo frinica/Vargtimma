@@ -7,7 +7,7 @@
 body {
   background-color: #1d1e22;
   font-family: "Ubuntu", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .App {
@@ -18,6 +18,10 @@ body {
 
 h1 {
   font-size: 3.2rem;
+}
+
+.text-custom {
+  color: #ffb34a;
 }
 
 .brand {
@@ -53,11 +57,9 @@ h1 {
 
 /* Forms */
 .wrapper {
-  max-width: 350px;
-  min-height: 500px;
-  position: relative;
+  width: fit-content;
+  padding: 1rem;
   border-radius: 18px;
-  overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }

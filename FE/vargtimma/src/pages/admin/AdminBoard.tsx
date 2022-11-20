@@ -129,7 +129,7 @@ const AdminPage: FC = () => {
           <Collapse className="mt-3" in={active === 1}>
             <div className="text-start mt-2">
               <ListGroup as="ol">
-                {reports.length !== 0 ? (
+                {reports.length > 0 ? (
                   reports.map((report: any, i: number) => {
                     return (
                       <ListGroup.Item

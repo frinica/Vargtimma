@@ -29,25 +29,18 @@ const LandingPage: FC = () => {
   }, []);
 
   return (
-    <div>
-      <div className="wrapper mx-auto mt-5">
-        {/* <div>
-          <img
-            src="img/lantern-logo.png"
-            alt="lantern with a burning candle inside"
-            className="mt-3"
-          />
-        </div> */}
+    <div className="vh-100 d-flex justify-content-center align-items-center">
+      <div className="wrapper">
         <Figure>
           <Figure.Image
             alt="lantern with a burning candle inside"
             src="assets/img/lantern-logo.png"
-            className="mt-3 logo"
+            className="mt-3"
           />
         </Figure>
-        <h1 className="mb-5 fw-bold brand">VARGTIMMA</h1>
+        <h1 className="mb-5 mt-2 fw-bold brand">VARGTIMMA</h1>
 
-        <div className="d-grid gap-3 col-6 mx-auto">
+        <div className="d-grid gap-3 col-6 mx-auto py-5">
           <Button href="/login" variant="custom" size="lg">
             Logga in
           </Button>

@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, useRef } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Figure } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { logout, userData } from "../services/auth.service";
 import alarmSfx from "../audio/psycho-sound-11797.mp3";

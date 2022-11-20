@@ -57,9 +57,11 @@ const LoginPage: FC = () => {
                 className="error"
               />
             </div>
-            <button type="submit" className="btn btn-custom">
-              Logga in
-            </button>
+            <div className="p-3">
+              <button type="submit" className="btn btn-custom">
+                Logga in
+              </button>
+            </div>
           </div>
         </Form>
       </Formik>

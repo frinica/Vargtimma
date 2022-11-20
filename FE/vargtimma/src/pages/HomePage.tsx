@@ -1,14 +1,21 @@
 import { FC } from "react";
+import { Figure } from "react-bootstrap";
 
 const HomePage: FC = () => {
   return (
     <div className="d-flex flex-column justify-content-center">
-      <h1 className="my-5">
+      <Figure className="mb-0 mt-3">
+        <Figure.Image
+          alt="lantern with a burning candle inside"
+          src="assets/img/lantern-logo.png"
+        />
+      </Figure>
+      <h1 className="mb-5">
         <span className="h2">Välkommen till </span>
         <span className="brand">Vargtimma</span>
       </h1>
       <div>
-        <h2 className="mb-3">Säkerhetsinformation:</h2>
+        <h2 className="my-3 text-custom">Säkerhetsinformation:</h2>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
           perferendis mollitia, magni pariatur blanditiis fugit illum laudantium
