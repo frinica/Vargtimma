@@ -5,10 +5,8 @@ import {
   Collapse,
   Form,
   ListGroup,
-  ToggleButton,
 } from "react-bootstrap";
 import Search from "../../components/Search";
-import { IBlacklist, IReport } from "../../models/Report";
 import { userData } from "../../services/auth.service";
 import {
   blockUser,

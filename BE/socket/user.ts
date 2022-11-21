@@ -3,12 +3,6 @@ interface IChatUser {
   username: string;
   room: string;
 }
-/*
-const initValues = {
-  id: 0,
-  username: "",
-  room: "",
-}; */
 
 let users: IChatUser[] = [];
 

@@ -1,7 +1,5 @@
-import { ObjectId } from "mongodb";
 import IBlacklist from "../models/BlacklistModel";
 import { getDB } from "./MongoDB";
-import { ReportedUserDB } from "./ReportedUserDB";
 
 const COLLECTION_NAME = "blacklist";
 
